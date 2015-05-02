@@ -34,6 +34,15 @@ def cas_validate(ticket, service):
     return None
 
 
+@login_manager.user_loader
+def user_loader(user_id):
+    """Given *user_id*, return the associated User object.
+
+    :param unicode user_id: user_id (netid) user to retrieve
+    """
+    return User.query.get(user_id)
+
+
 @flask_cas.route("/login")
 def login():
     callback_url = request.url.split('?')[0]

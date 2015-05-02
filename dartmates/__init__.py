@@ -27,8 +27,9 @@ def create_app(env=None):
     from dartmates.mail import mail
     mail.init_app(app)
 
-    from dartmates.login import flask_cas
+    from dartmates.login import flask_cas, login_manager
     app.register_blueprint(flask_cas)
+    login_manager.init_app(app)
 
     from dartmates.frontend import frontend
     app.register_blueprint(frontend.bp)
