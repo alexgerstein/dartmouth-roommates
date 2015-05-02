@@ -1,7 +1,6 @@
 from flask.ext.restful import Resource
-from flask.ext.login import current_user, logout_user
+from flask.ext.login import login_required, current_user, logout_user
 
-from dartmates.login import login_required
 from dartmates.database import db
 
 
