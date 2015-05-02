@@ -1,25 +1,18 @@
 # Adapted from Dartmouth Hacker Club
 
 from flask import Blueprint, request, redirect, session, url_for
+from flask.ext.login import LoginManager, login_user
 import urllib
 import requests
 from lxml import etree
-from functools import wraps
+
+from dartmates.database import db
+from dartmates.models import User
 
 flask_cas = Blueprint('flask_cas', __name__, template_folder='templates')
 
 CAS_URL = 'https://login.dartmouth.edu/cas/'
-
-
-# Wrapper function so certain pages remain private to new users
-def login_required(fn):
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        if 'user' not in session:
-            return redirect(url_for('flask_cas.login'))
-
-        return fn(*args, **kwargs)
-    return wrapper
+login_manager = LoginManager()
 
 
 def recursive_dict(element):
@@ -45,11 +38,17 @@ def cas_validate(ticket, service):
 def login():
     callback_url = request.url.split('?')[0]
     if 'ticket' in request.args:
-        session['user'] = cas_validate(request.args['ticket'], callback_url)
+        user_data = cas_validate(request.args['ticket'], callback_url)
+        user = User.query.filter_by(netid=user_data['netid']).first()
+        if user is None:
+            user = User(user_data['name'], user_data['netid'])
+            db.session.add(user)
+            db.session.commit()
+        login_user(user)
     else:
         return cas_login(callback_url)
 
-    return redirect(url_for('frontend.planner'))
+    return redirect(url_for('frontend.index'))
 
 
 @flask_cas.route("/logout")

@@ -1,4 +1,4 @@
-from dartplan.database import db
+from dartmates.database import db
 
 
 class User(db.Model):
