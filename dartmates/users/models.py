@@ -1,13 +1,14 @@
 from dartmates.database import db
-from datetime import timedelta
+from datetime import datetime, timedelta
 
-START_DATE_RANGE = 30
+START_DATE_RANGE_MAX = 30
 
 
 class User(db.Model):
     netid = db.Column(db.String(15), primary_key=True)
     full_name = db.Column(db.String(200))
     nickname = db.Column(db.String(64))
+    joined_at = db.Column(db.DateTime)
 
     city = db.Column(db.String(200))
     number_of_roommates = db.Column(db.SmallInteger)
@@ -31,6 +32,7 @@ class User(db.Model):
         self.number_of_roommates = number_of_roommates
         self.searching = searching
         self.email_updates = email_updates
+        self.joined_at = datetime.now()
 
     def is_active(self):
         """True, as all users are active."""
@@ -49,8 +51,11 @@ class User(db.Model):
         return False
 
     def get_roommate_matches(self):
-        earliest_date = self.start_date - timedelta(days=START_DATE_RANGE / 2)
-        latest_date = self.start_date + timedelta(days=START_DATE_RANGE / 2)
+        if not self.start_date or not self.city:
+            return []
+
+        earliest_date = self.start_date - timedelta(days=START_DATE_RANGE_MAX)
+        latest_date = self.start_date + timedelta(days=START_DATE_RANGE_MAX)
 
         matched_users = User.query.filter(User.city == self.city)   \
                                   .filter(User.netid != self.netid) \

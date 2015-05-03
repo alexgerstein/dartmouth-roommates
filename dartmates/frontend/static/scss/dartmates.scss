@@ -1,0 +1,9 @@
+@import "vendor/materialize/components/color";
+
+form {
+  padding: 10px;
+}
+
+.visited {
+  @extend .grey-text;
+}

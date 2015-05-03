@@ -1,10 +1,35 @@
 import pytest
 import json
 
+from datetime import datetime
+
 from . import TestBase
 
 
 class TestUserAPI(TestBase):
+
+    def test_get_user(self, test_client, user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = user.netid
+
+        get = test_client.get('/api/user')
+        self.check_valid_header_type(get.headers)
+        data = json.loads(get.data)
+        assert data['user']['netid'] == user.netid
+
+    def test_put_user(self, test_client, user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = user.netid
+
+        data = dict(nickname="Alex",
+                    start_date=datetime.now().date(),
+                    city="New York")
+        put = test_client.put('/api/user', data=data)
+        self.check_valid_header_type(put.headers)
+        data = json.loads(put.data)
+        print data
+        assert data['user']['nickname'] == "Alex"
+        assert data['user']['netid'] == user.netid
 
     def test_delete_user(self, test_client, user):
         with test_client.session_transaction() as sess:

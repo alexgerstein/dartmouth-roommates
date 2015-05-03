@@ -1,7 +1,7 @@
 # Adapted from Dartmouth Hacker Club
 
-from flask import Blueprint, request, redirect, session, url_for
-from flask.ext.login import LoginManager, login_user
+from flask import Blueprint, request, redirect, session, url_for, abort
+from flask.ext.login import LoginManager, login_user, logout_user
 import urllib
 import requests
 from lxml import etree
@@ -13,6 +13,7 @@ flask_cas = Blueprint('flask_cas', __name__, template_folder='templates')
 
 CAS_URL = 'https://login.dartmouth.edu/cas/'
 login_manager = LoginManager()
+login_manager.login_view = None
 
 
 def recursive_dict(element):
@@ -62,5 +63,5 @@ def login():
 
 @flask_cas.route("/logout")
 def logout():
-    session.pop('user', None)
+    logout_user()
     return redirect(url_for("frontend.index"))
