@@ -31,12 +31,11 @@ def create_app(env=None):
     app.register_blueprint(flask_cas)
     login_manager.init_app(app)
 
-    from dartmates.frontend import frontend
+    from dartmates.frontend import frontend, assets
     app.register_blueprint(frontend.bp)
+    assets.init_app(app)
 
     from dartmates.api import bp as api_bp
     app.register_blueprint(api_bp)
-
-    app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
     return app

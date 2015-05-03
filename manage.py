@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+from datetime import datetime
 from dartmates import create_app
 from dartmates.database import db
 from dartmates.models import User
@@ -21,6 +22,15 @@ def _make_context():
 def tests():
     status = subprocess.call("bash ./scripts/test.sh", shell=True)
     sys.exit(status)
+
+
+@manager.command
+def seed():
+    for i in range(5):
+        user = User(full_name="User %d" % i, netid="%d" % i,
+                    city="San Francisco", start_date=datetime.now())
+        db.session.add(user)
+        db.session.commit()
 
 
 manager.add_command('server', Server())

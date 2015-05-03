@@ -58,8 +58,13 @@ docs/_build/
 # PyBuilder
 target/
 
+# Assets
+dartmates/frontend/static/.webassets-cache/
+*.css
+*.min.js
+
 # Database
-app.db
+*.db
 
 # Secret
 instance/

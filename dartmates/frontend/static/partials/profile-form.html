@@ -1,0 +1,35 @@
+<form ng-submit="submit()"  ng-controller="ProfileController" class="z-depth-2">
+  <div class="row">
+    <div class="col s8">
+      <label for="nickname">Name</label>
+      <input placeholder="Placeholder" id="nickname" type="text" class="validate" ng-model="user.nickname">
+    </div>
+    <div class="col s4">
+      <label for="grad_year">Year</label>
+      <input id="grad_yer" type="text" class="validate" ng-model="user.grad_year">
+    </div>
+    <div class="col s12">
+      <label for="city">City</label>
+      <input id="city" type="text" class="validate" ng-model="user.city">
+    </div>
+    <div class="col s12">
+      <label for="start_date">Start Date</label>
+      <input id="start_date" type="date" class="datepicker" ng-model="user.start_date">
+    </div>
+    <div class="col s6">
+      <label for="time_period"># of Months</label>
+      <input id="time_period" type="text" class="validate" ng-model="user.time_period">
+    </div>
+    <div class="col s6">
+      <label for="number_of_roommates"># of Roommates</label>
+      <input id="number_of_roommates" type="text" class="validate" ng-model="user.number_of_roommates">
+    </div>
+    <div class="input-field col s6 m12 l6">
+      <input id="searching" type="checkbox" class="filled-in" ng-model="user.searching">
+      <label for="searching">Searching</label>
+    </div>
+    <div class="input-field col s6 m12 l6">
+      <input class="btn waves-effect waves-light" type="submit" id="submit" value="Update">
+    </div>
+  </div>
+</form>

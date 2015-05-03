@@ -1,7 +1,73 @@
-{% extends "base.html" %}
+<html>
+  <head>
+    <title>{{ title or "DARTmates - Find your next roommate." }}</title>
 
-{% block content %}
+    <meta name="description" content="DARTmates helps Dartmouth students find roommates for off-terms and after graduation.">
 
-DARTmates
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+
+    {% assets "css_dartmates" %}
+      <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+    {% endassets %}
+  </head>
+  <body ng-app="dartmatesApp">
+    <nav>
+        <div class="container nav-wrapper">
+          <a href="#" class="brand-logo">DARTmates</a>
+          <a href="#" data-activates="collapse-nav" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {% if current_user.is_authenticated() %}
+            <li><a href="/logout"><i class="mdi-action-exit-to-app left"></i>Logout</a></li>
+            {% else %}
+            <li><a href="/login"><i class="mdi-action-perm-identity left"></i>Login</a></li>
+            {% endif %}
+          </ul>
+          <ul id="collapse-nav" class="side-nav">
+            {% if current_user.is_authenticated() %}
+            <li><a href="/logout"><i class="mdi-action-exit-to-app left"></i>Logout</a></li>
+            {% else %}
+            <li><a href="/login"><i class="mdi-action-perm-identity left"></i>Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+
+    <main class="container">
+      <div class="row">
+        <div class="col s12 m5 l4 profile-panel right">
+          <h3>Your Profile</h3>
+          {% if current_user.is_authenticated() %}
+            <ng-include src="'static/partials/profile-form.html'"></ng-include>
+          {% else %}
+            <a href="/login" class="waves-effect waves-light btn middle-align"><i class="mdi-action-perm-identity left"></i>Login</a>
+          {% endif %}
+          <ul ng-repeat="match in matches">
+            <li>{[match.netid]}</li>
+          </ul>
+        </div>
+
+      {% if current_user.is_authenticated() %}
+        <div class="col s12 m7 l8" ng-controller="MatchesController">
+          <h3>Your Matches</h3>
+          <h5 ng-if="!matches.length">It looks like you don't have any matches yet! Edit your profile on the right to find more potential roommates.</h5>
+          <ul ng-repeat="match in matches">
+            <li>{[match.netid]}</li>
+          </ul>
+        </div>
+      {% else %}
+        <div class="col s12 m8"><h3>Landing Page</h3></div>
+      {% endif %}
+      </div>
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+    {% assets "js_dartmates" %}
+      <script src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+  </body>
+</html>
