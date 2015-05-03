@@ -1,1 +1,1 @@
-web: sh ./scripts/heroku.sh
+web: gunicorn dartmates:create_app\(\) --daemon
