@@ -51,10 +51,22 @@
       {% if current_user.is_authenticated() %}
         <div class="col s12 m7 l8" ng-controller="MatchesController">
           <h3>Your Matches</h3>
-          <h5 ng-if="!matches.length">It looks like you don't have any matches yet! Edit your profile on the right to find more potential roommates.</h5>
-          <ul ng-repeat="match in matches">
-            <li>{[match.netid]}</li>
-          </ul>
+          <div ng-switch="isLoading">
+            <div ng-switch-when="true">
+              <div class="progress">
+                <div class="indeterminate"></div>
+              </div>
+            </div>
+            <div ng-switch-when="false">
+              <div ng-if="!matches.length">
+                <h5>It looks like you don't have any matches yet!</h5>
+                <p>Edit your profile on the right to find more potential roommates.</p>
+              </div>
+              <ul class="collection">
+                <user-list-item ng-repeat="user in matches | orderBy:'-joined_at'"></user-list-item>
+              </ul>
+            </div>
+          </div>
         </div>
       {% else %}
         <div class="col s12 m8"><h3>Landing Page</h3></div>

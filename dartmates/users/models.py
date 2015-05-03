@@ -1,8 +1,7 @@
 from dartmates.database import db
 from datetime import datetime, timedelta
-from sqlalchemy import desc
 
-START_DATE_RANGE = 30
+START_DATE_RANGE_MAX = 30
 
 
 class User(db.Model):
@@ -55,13 +54,12 @@ class User(db.Model):
         if not self.start_date or not self.city:
             return []
 
-        earliest_date = self.start_date - timedelta(days=START_DATE_RANGE / 2)
-        latest_date = self.start_date + timedelta(days=START_DATE_RANGE / 2)
+        earliest_date = self.start_date - timedelta(days=START_DATE_RANGE_MAX)
+        latest_date = self.start_date + timedelta(days=START_DATE_RANGE_MAX)
 
         matched_users = User.query.filter(User.city == self.city)   \
                                   .filter(User.netid != self.netid) \
                                   .filter(User.start_date.between(earliest_date, latest_date))               \
                                   .filter(User.searching)           \
-                                  .order_by(desc(User.joined_at))   \
                                   .all()
         return matched_users

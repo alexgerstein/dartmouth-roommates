@@ -1,0 +1,12 @@
+<li class="collection-item avatar">
+  <i class="green circle">{{user.grad_year | gradYear}}</i>
+  <span class="title">{{user.nickname}}</span>
+  <p>Starting {{user.start_date | date : 'mediumDate'}} for {{user.time_period}} Months.</p>
+  <ng-pluralize count="{{user.number_of_roommates}}" when="{'0': 'Not looking for roommates.',
+                                                           'one': 'Looking for {} roommate.',
+                                                           'other': 'Looking for {} roommates.'}">
+  </ng-pluralize>
+  <a ng-class="{'visited': visited}" href="mailto:{{user.netid}}@dartmouth.edu?subject=Still looking for another roommate?&body=Hi {{user.nickname}},<br><br>I found your name through DARTmates..." ng-click="visited = true" class="message secondary-content">
+    <i class="small mdi-communication-email left"></i><br>Blitz!
+  </a>
+</li>
