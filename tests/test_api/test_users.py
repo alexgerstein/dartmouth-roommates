@@ -19,6 +19,44 @@ class TestUserAPI(TestBase):
 
 class TestUserMatchesAPI(TestBase):
 
+    def test_get_user_matches(self, test_client, sf_user, sf_users):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = sf_user.netid
+
+        matches = test_client.get('/api/users/matches')
+        self.check_valid_header_type(matches.headers)
+        data = json.loads(matches.data)
+        assert len(data['users']) == 5
+
+    def test_no_matches_from_finished_searchers(self, test_client,
+                                                finished_sf_user, sf_user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = sf_user.netid
+
+        matches = test_client.get('/api/users/matches')
+        self.check_valid_header_type(matches.headers)
+        data = json.loads(matches.data)
+        assert data['users'] == []
+
+    def test_no_matches_outside_start_date_range(self, test_client,
+                                                 old_sf_user, sf_user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = sf_user.netid
+
+        matches = test_client.get('/api/users/matches')
+        self.check_valid_header_type(matches.headers)
+        data = json.loads(matches.data)
+        assert data['users'] == []
+
+    def test_no_matches_outside_city(self, test_client, ny_user, sf_user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = sf_user.netid
+
+        matches = test_client.get('/api/users/matches')
+        self.check_valid_header_type(matches.headers)
+        data = json.loads(matches.data)
+        assert data['users'] == []
+
     def test_get_user_matches_no_matches(self, test_client, user):
         with test_client.session_transaction() as sess:
             sess['user_id'] = user.netid

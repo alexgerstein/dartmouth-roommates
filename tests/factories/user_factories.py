@@ -21,3 +21,9 @@ class UserFactory(SQLAlchemyModelFactory):
     searching = True
 
     email_updates = True
+
+
+class SanFranciscoUserFactory(UserFactory):
+    city = "San Francisco"
+    start_date = datetime.date(2015, 7, 3)
+    time_period = 12

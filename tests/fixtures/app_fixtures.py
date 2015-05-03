@@ -45,6 +45,7 @@ def session(db, request):
     db.session = session
 
     user_factories.UserFactory._meta.sqlalchemy_session = session
+    user_factories.SanFranciscoUserFactory._meta.sqlalchemy_session = session
 
     yield db.session
 

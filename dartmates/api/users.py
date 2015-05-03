@@ -8,7 +8,7 @@ user_fields = {
     'nickname': fields.String,
     'city': fields.String,
     'number_of_roommates': fields.Integer,
-    'start_date': fields.DateTime,
+    'start_date': fields.String,
     'time_period': fields.Integer
 }
 
