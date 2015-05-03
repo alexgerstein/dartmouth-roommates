@@ -146,4 +146,15 @@ $(document).ready(function(){
   angular
     .module('dartmatesApp')
     .directive('userListItem', userListItem);
+
+  function profileForm () {
+    return {
+      replace: true,
+      templateUrl: 'static/partials/profile-form.html'
+    };
+  }
+
+  angular
+    .module('dartmatesApp')
+    .directive('profileForm', profileForm);
 })();

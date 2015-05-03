@@ -15,37 +15,42 @@
   <body ng-app="dartmatesApp">
     <nav>
         <div class="container nav-wrapper">
-          <a href="#" class="brand-logo">DARTmates</a>
-          <a href="#" data-activates="collapse-nav" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            {% if current_user.is_authenticated() %}
-            <li><a href="/logout"><i class="mdi-action-exit-to-app left"></i>Logout</a></li>
-            {% else %}
-            <li><a href="/login"><i class="mdi-action-perm-identity left"></i>Login</a></li>
-            {% endif %}
-          </ul>
-          <ul id="collapse-nav" class="side-nav">
-            {% if current_user.is_authenticated() %}
-            <li><a href="/logout"><i class="mdi-action-exit-to-app left"></i>Logout</a></li>
-            {% else %}
-            <li><a href="/login"><i class="mdi-action-perm-identity left"></i>Login</a></li>
-            {% endif %}
-          </ul>
+          <div class="nav-wrapper">
+            <a href="#" class="brand-logo">DARTmates</a>
+            <a href="#" data-activates="collapse-nav" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              {% if current_user.is_authenticated() %}
+              <li><a href="/logout"><i class="mdi-action-exit-to-app left"></i>Logout</a></li>
+              {% else %}
+              <li><a href="/login"><i class="mdi-action-perm-identity left"></i>Login</a></li>
+              {% endif %}
+            </ul>
+            <ul id="collapse-nav" class="side-nav">
+              {% if current_user.is_authenticated() %}
+              <li><a href="/logout"><i class="mdi-action-exit-to-app left"></i>Logout</a></li>
+              {% else %}
+              <li><a href="/login"><i class="mdi-action-perm-identity left"></i>Login</a></li>
+              {% endif %}
+            </ul>
+          </div>
         </div>
       </nav>
 
     <main class="container">
       <div class="row">
-        <div class="col s12 m5 l4 profile-panel right">
-          <h3>Your Profile</h3>
-          {% if current_user.is_authenticated() %}
-            <ng-include src="'static/partials/profile-form.html'"></ng-include>
-          {% else %}
-            <a href="/login" class="waves-effect waves-light btn middle-align"><i class="mdi-action-perm-identity left"></i>Login</a>
-          {% endif %}
-          <ul ng-repeat="match in matches">
-            <li>{[match.netid]}</li>
-          </ul>
+
+        <div class="col s12 m5 l4 right">
+          <div class="profile-panel">
+            <h3>Your Profile</h3>
+            {% if current_user.is_authenticated() %}
+              <profile-form></profile-form>
+            {% else %}
+              <a href="/login" class="waves-effect waves-light btn middle-align"><i class="mdi-action-perm-identity left"></i>Login</a>
+            {% endif %}
+            <ul ng-repeat="match in matches">
+              <li>{[match.netid]}</li>
+            </ul>
+          </div>
         </div>
 
       {% if current_user.is_authenticated() %}
@@ -69,7 +74,7 @@
           </div>
         </div>
       {% else %}
-        <div class="col s12 m8"><h3>Landing Page</h3></div>
+        <div class="col s12 m7 l8"><h3>Landing Page</h3></div>
       {% endif %}
       </div>
     </div>

@@ -26,7 +26,7 @@ def tests():
 
 @manager.command
 def seed():
-    for i in range(5):
+    for i in range(10):
         user = User(full_name="User %d" % i, netid="%d" % i,
                     city="San Francisco", start_date=datetime.now(),
                     grad_year=2015)
