@@ -1,1 +1,1 @@
-web: bash ./scripts/heroku.sh
+web: gunicorn sourcemash:create_app\(\) --daemon
