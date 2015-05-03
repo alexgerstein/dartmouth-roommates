@@ -10,17 +10,21 @@ class User(db.Model):
     number_of_roommates = db.Column(db.SmallInteger)
     start_date = db.Column(db.Date)
     time_period = db.Column(db.SmallInteger)
-    grad_year = db.Column(db.SmallInteger)
     searching = db.Column(db.Boolean)
 
     email_updates = db.Column(db.Boolean)
 
-    def __init__(self, full_name, netid):
+    def __init__(self, full_name, netid, grad_year=None, city=None, email_updates=True, searching=True, time_period=12, number_of_roommates=1, start_date=None):
         self.full_name = full_name
-        self.netid = netid
         self.nickname = full_name
-        self.searching = True
-        self.email_updates = True
+        self.netid = netid
+        self.grad_year = grad_year
+        self.start_date = start_date
+        self.city = city
+        self.time_period = time_period
+        self.number_of_roommates = number_of_roommates
+        self.searching = searching
+        self.email_updates = email_updates
 
     def is_active(self):
         """True, as all users are active."""
@@ -37,3 +41,6 @@ class User(db.Model):
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
         return False
+
+    def get_roommate_matches(self):
+        return []

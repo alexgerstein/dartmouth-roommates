@@ -11,7 +11,7 @@ SQLALCHEMY_NATIVE_UNICODE = False
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-logger = logging.getLogger('DARTmates')
+logger = logging.getLogger('dartmates')
 stream_handler = logging.StreamHandler()
 logger.addHandler(stream_handler)
 logger.setLevel(logging.DEBUG)

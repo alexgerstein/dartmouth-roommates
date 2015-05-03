@@ -7,5 +7,5 @@ TESTING = True
 LOGIN_DISABLED = False
 SQLALCHEMY_DATABASE_URI = ('sqlite:///:memory:')
 
-logger = logging.getLogger('DARTmates')
+logger = logging.getLogger('dartmates')
 logger.info("Testing settings loaded.")
