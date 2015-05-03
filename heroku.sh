@@ -1,1 +1,1 @@
-gunicorn dartmates:create_app\(\) --daemon
+gunicorn dartmates:create_app\(\)
