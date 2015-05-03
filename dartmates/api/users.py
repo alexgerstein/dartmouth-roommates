@@ -47,8 +47,9 @@ class UserAPI(Resource):
                     v = v.split('T')[0]
                     v = datetime.strptime(v, "%Y-%m-%d")
             if k == 'grad_year':
-                if v < 2000:
-                    v = 2000 + v
+                if v:
+                    if v < 2000:
+                        v = 2000 + v
             setattr(current_user, k, v)
         db.session.commit()
 
