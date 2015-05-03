@@ -3,6 +3,8 @@ import pytest
 from dartmates import create_app
 from dartmates.database import db as _db
 
+from tests.factories import user_factories
+
 
 @pytest.yield_fixture(scope='session')
 def app(request):
@@ -41,6 +43,9 @@ def session(db, request):
     options = dict(bind=connection)
     session = db.create_scoped_session(options)
     db.session = session
+
+    user_factories.UserFactory._meta.sqlalchemy_session = session
+    user_factories.SanFranciscoUserFactory._meta.sqlalchemy_session = session
 
     yield db.session
 
