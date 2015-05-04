@@ -27,10 +27,10 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesFilters', [])
+    .module('lodjersFilters', [])
     .filter('gradYear', gradYear)
 
-  angular.module('dartmatesApp', ['dartmatesFilters']);
+  angular.module('lodjersApp', ['lodjersFilters']);
 
   function config ($interpolateProvider) {
     $interpolateProvider
@@ -39,7 +39,7 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesApp')
+    .module('lodjersApp')
     .config(config);
 
   function UserService ($http, $rootScope) {
@@ -74,7 +74,7 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesApp')
+    .module('lodjersApp')
     .factory('UserService', UserService);
 
   function MatchesService ($http) {
@@ -101,7 +101,7 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesApp')
+    .module('lodjersApp')
     .factory('MatchesService', MatchesService);
 
   function MatchesController ($scope, MatchesService) {
@@ -116,7 +116,7 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesApp')
+    .module('lodjersApp')
     .controller('MatchesController', MatchesController);
 
   function ProfileController ($scope, UserService) {
@@ -133,7 +133,7 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesApp')
+    .module('lodjersApp')
     .controller('ProfileController', ProfileController);
 
   function userListItem () {
@@ -144,7 +144,7 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesApp')
+    .module('lodjersApp')
     .directive('userListItem', userListItem);
 
   function profileForm () {
@@ -155,6 +155,6 @@ $(document).ready(function(){
   }
 
   angular
-    .module('dartmatesApp')
+    .module('lodjersApp')
     .directive('profileForm', profileForm);
 })();

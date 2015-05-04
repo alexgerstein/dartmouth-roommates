@@ -6,8 +6,8 @@ omit =
     flask/*
     instance/*
     migrations/*
-    dartmates/frontend/*
-    dartmates/login.py
+    lodjers/frontend/*
+    lodjers/login.py
     tests/*
     manage.py
 

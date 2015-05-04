@@ -59,7 +59,7 @@ docs/_build/
 target/
 
 # Assets
-dartmates/frontend/static/.webassets-cache/
+lodjers/frontend/static/.webassets-cache/
 *.css
 *.min.js
 

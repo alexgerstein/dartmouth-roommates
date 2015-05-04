@@ -1,4 +1,4 @@
-from dartmates.database import db
+from lodjers.database import db
 from datetime import datetime, timedelta
 
 START_DATE_RANGE_MAX = 30

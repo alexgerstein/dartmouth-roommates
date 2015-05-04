@@ -16,6 +16,6 @@ deploy:
   api_key:
     secure: fUe7HpvG3CmNJg/sisHhCBTjzx18JeQKjaJONZ+TWmLkEcTvOlxYQQJxSRAMExOGhLaliNLuOpnqyitmBvBPuggcogTK/cxRgk7EFw0MWxn7vZuiJiHTQcbPIRQSlwuhomj8q0ABKq1Rc5XKDVuvyvVyY49MwBI2njHcKSAkpkA=
   app:
-    master: dartmates-staging
+    master: lodjers-staging
   run:
   - python manage.py db upgrade

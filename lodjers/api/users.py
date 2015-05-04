@@ -2,7 +2,7 @@ from datetime import datetime
 from flask.ext.restful import Resource, inputs, fields, marshal, reqparse
 from flask.ext.login import login_required, current_user, logout_user
 
-from dartmates.database import db
+from lodjers.database import db
 
 user_fields = {
     'netid': fields.String,

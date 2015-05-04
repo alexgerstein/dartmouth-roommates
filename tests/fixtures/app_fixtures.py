@@ -1,7 +1,7 @@
 import pytest
 
-from dartmates import create_app
-from dartmates.database import db as _db
+from lodjers import create_app
+from lodjers.database import db as _db
 
 from tests.factories import user_factories
 

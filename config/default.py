@@ -12,7 +12,7 @@ SQLALCHEMY_RECORD_QUERIES = True
 
 logging.basicConfig(level=logging.WARNING)
 
-logger = logging.getLogger('DARTmates')
+logger = logging.getLogger('lodjers')
 logger.setLevel(logging.INFO)
 
 logger.info("Default settings loaded.")
