@@ -8,7 +8,7 @@ user_fields = {
     'netid': fields.String,
     'full_name': fields.String,
     'nickname': fields.String,
-    'grad_year': fields.Integer,
+    'grad_year': fields.Integer(default=None),
     'city': fields.String,
     'number_of_roommates': fields.Integer,
     'start_date': fields.String,
@@ -22,14 +22,14 @@ class UserAPI(Resource):
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('nickname', type=str)
+        self.reqparse.add_argument('nickname', type=str, required=True)
         self.reqparse.add_argument('city', type=str, required=True)
-        self.reqparse.add_argument('grad_year', type=int)
+        self.reqparse.add_argument('grad_year', type=int, required=True)
         self.reqparse.add_argument('start_date',
                                    type=str,
                                    required=True)
-        self.reqparse.add_argument('time_period', type=int)
-        self.reqparse.add_argument('number_of_roommates', type=str)
+        self.reqparse.add_argument('time_period', type=int, required=True)
+        self.reqparse.add_argument('number_of_roommates', type=str, required=True)
         self.reqparse.add_argument('searching', type=inputs.boolean)
         super(UserAPI, self).__init__()
 
