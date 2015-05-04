@@ -22,14 +22,12 @@ class UserAPI(Resource):
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('nickname', type=str, required=True)
-        self.reqparse.add_argument('city', type=str, required=True)
-        self.reqparse.add_argument('grad_year', type=int, required=True)
-        self.reqparse.add_argument('start_date',
-                                   type=str,
-                                   required=True)
-        self.reqparse.add_argument('time_period', type=int, required=True)
-        self.reqparse.add_argument('number_of_roommates', type=str, required=True)
+        self.reqparse.add_argument('nickname', type=str)
+        self.reqparse.add_argument('city', type=str)
+        self.reqparse.add_argument('grad_year', type=int)
+        self.reqparse.add_argument('start_date', type=str)
+        self.reqparse.add_argument('time_period', type=int)
+        self.reqparse.add_argument('number_of_roommates', type=str)
         self.reqparse.add_argument('searching', type=inputs.boolean)
         super(UserAPI, self).__init__()
 
