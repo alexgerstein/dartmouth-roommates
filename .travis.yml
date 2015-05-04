@@ -18,4 +18,6 @@ deploy:
   app:
     master: lodjers-staging
   run:
+  - "python manage.py assets clean"
+  - "python manage.py assets build"
   - python manage.py db upgrade
