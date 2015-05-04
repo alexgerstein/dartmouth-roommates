@@ -2,9 +2,9 @@ import os
 import sys
 import subprocess
 from datetime import datetime
-from dartmates import create_app
-from dartmates.database import db
-from dartmates.models import User
+from lodjers import create_app
+from lodjers.database import db
+from lodjers.models import User
 from flask.ext.script import Manager, Shell, Server
 from flask.ext.migrate import MigrateCommand
 

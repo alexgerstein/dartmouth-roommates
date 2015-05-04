@@ -20,22 +20,22 @@ def create_app(env=None):
     if env_config_file:
         app.config.from_object('config.%s' % env_config_file)
 
-    from dartmates.database import db, migrate
+    from lodjers.database import db, migrate
     db.init_app(app)
     migrate.init_app(app, db)
 
-    from dartmates.mail import mail
+    from lodjers.mail import mail
     mail.init_app(app)
 
-    from dartmates.login import flask_cas, login_manager
+    from lodjers.login import flask_cas, login_manager
     app.register_blueprint(flask_cas)
     login_manager.init_app(app)
 
-    from dartmates.frontend import frontend, assets
+    from lodjers.frontend import frontend, assets
     app.register_blueprint(frontend.bp)
     assets.init_app(app)
 
-    from dartmates.api import bp as api_bp
+    from lodjers.api import bp as api_bp
     app.register_blueprint(api_bp)
 
     return app

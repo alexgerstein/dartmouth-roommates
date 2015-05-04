@@ -1,6 +1,6 @@
 from . import bp
 from flask import render_template
-from dartmates.models import User
+from lodjers.models import User
 
 
 @bp.route('/')

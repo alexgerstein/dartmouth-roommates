@@ -2,7 +2,7 @@ from tests.factories import *
 
 import string
 
-from dartmates.models import User
+from lodjers.models import User
 
 
 class UserFactory(SQLAlchemyModelFactory):

@@ -6,8 +6,8 @@ import urllib
 import requests
 from lxml import etree
 
-from dartmates.database import db
-from dartmates.models import User
+from lodjers.database import db
+from lodjers.models import User
 
 flask_cas = Blueprint('flask_cas', __name__, template_folder='templates')
 
