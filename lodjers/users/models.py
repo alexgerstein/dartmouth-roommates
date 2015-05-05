@@ -11,7 +11,6 @@ class User(db.Model):
     joined_at = db.Column(db.DateTime)
 
     city = db.Column(db.String(200))
-    number_of_roommates = db.Column(db.SmallInteger)
     start_date = db.Column(db.Date)
     time_period = db.Column(db.SmallInteger)
     grad_year = db.Column(db.SmallInteger)
@@ -21,7 +20,7 @@ class User(db.Model):
 
     def __init__(self, full_name, netid, grad_year=None, city=None,
                  email_updates=True, searching=True, start_date=None,
-                 time_period=12, number_of_roommates=1):
+                 time_period=12):
         self.full_name = full_name
         self.nickname = full_name
         self.netid = netid
@@ -29,7 +28,6 @@ class User(db.Model):
         self.start_date = start_date
         self.city = city
         self.time_period = time_period
-        self.number_of_roommates = number_of_roommates
         self.searching = searching
         self.email_updates = email_updates
         self.joined_at = datetime.now()

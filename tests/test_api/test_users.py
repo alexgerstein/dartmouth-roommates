@@ -23,7 +23,8 @@ class TestUserAPI(TestBase):
 
         data = dict(nickname="Alex",
                     start_date=datetime.now().date(),
-                    city="New York")
+                    city="New York", grad_year=2015,
+                    time_period=10)
         put = test_client.put('/api/user', data=data)
         self.check_valid_header_type(put.headers)
         data = json.loads(put.data)

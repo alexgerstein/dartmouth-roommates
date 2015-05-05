@@ -1,12 +1,19 @@
-<li class="collection-item avatar">
-  <i class="green circle">{{user.grad_year | gradYear}}</i>
-  <span class="title">{{user.nickname}}</span>
-  <p><ng-pluralize count="{{user.number_of_roommates}}" when="{'0': 'Not looking for roommates',
-                                                           'one': 'Looking for {} roommate',
-                                                           'other': 'Looking for {} roommates'}">
-  </ng-pluralize> in {{user.city}}.</p>
-  <p>Starting {{user.start_date | date : 'mediumDate'}} for {{user.time_period}} Months.</p>
-  <a ng-class="{'visited': visited}" href="mailto:{{user.netid}}@dartmouth.edu?subject=Still looking for another roommate?&body=Hi {{user.nickname}},<br><br>I found your name through lodjers.com..." ng-click="visited = true" class="message secondary-content">
-    <i class="small mdi-communication-email left"></i><br>Blitz!
+<md-list-item class="md-3-line" layout="row">
+  <div flex="80" class="md-list-item-text">
+    <h3>{{user.nickname}}, {{user.grad_year | gradYear}}</h3>
+    <div ng-switch="user.searching">
+      <p ng-switch-when="true">Looking for roommates.</p>
+      <p ng-switch-when="false">Not looking for roommates.</p>
+    </div>
+
+    <h4>Starting {{user.start_date | date : 'mediumDate'}} for {{user.time_period}} Months.</h4>
+  </div>
+  <a flex="20" ng-class="{'visited': visited}" href="mailto:{{user.netid}}@dartmouth.edu?subject=Still looking for another roommate?&body=Hi {{user.nickname}},<br><br>I found your name through lodjers.com..." ng-click="visited = true" class="message secondary-content">
+    <ng-md-icon class="md-secondary" icon="email" aria-label="Blitz!">
+      <md-tooltip>
+        Blitz!
+      </md-tooltip>
+    </ng-md-icon>
   </a>
-</li>
+  <md-divider></md-divider>
+</md-list-item>

@@ -10,7 +10,6 @@ user_fields = {
     'nickname': fields.String,
     'grad_year': fields.Integer(default=None),
     'city': fields.String,
-    'number_of_roommates': fields.Integer,
     'start_date': fields.String,
     'time_period': fields.Integer,
     'searching': fields.Boolean,
@@ -22,12 +21,11 @@ class UserAPI(Resource):
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('nickname', type=str)
+        self.reqparse.add_argument('nickname', type=str, required=True)
         self.reqparse.add_argument('city', type=str)
-        self.reqparse.add_argument('grad_year', type=int)
-        self.reqparse.add_argument('start_date', type=str)
-        self.reqparse.add_argument('time_period', type=int)
-        self.reqparse.add_argument('number_of_roommates', type=str)
+        self.reqparse.add_argument('grad_year', type=int, required=True)
+        self.reqparse.add_argument('start_date', type=str, required=True)
+        self.reqparse.add_argument('time_period', type=int, required=True)
         self.reqparse.add_argument('searching', type=inputs.boolean)
         super(UserAPI, self).__init__()
 
@@ -44,10 +42,9 @@ class UserAPI(Resource):
                 if v:
                     v = v.split('T')[0]
                     v = datetime.strptime(v, "%Y-%m-%d")
-            if k == 'grad_year':
+            if k == 'city':
                 if v:
-                    if v < 2000:
-                        v = 2000 + v
+                    v = v.lower()
             setattr(current_user, k, v)
         db.session.commit()
 
