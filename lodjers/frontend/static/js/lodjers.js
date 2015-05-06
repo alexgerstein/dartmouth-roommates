@@ -40,7 +40,7 @@ $(document).ready(function(){
     .filter('gradYear', gradYear)
     .filter('inflection', inflection)
 
-  angular.module('lodjersApp', ['lodjersFilters', 'ngMaterial', 'ngMdIcons', 'ngMessages']);
+  angular.module('lodjersApp', ['lodjersFilters', 'ngMaterial', 'ngCookies', 'ngMdIcons', 'ngMessages']);
 
   function config ($interpolateProvider, $mdThemingProvider) {
     $interpolateProvider
@@ -127,7 +127,10 @@ $(document).ready(function(){
     .module('lodjersApp')
     .factory('MatchesService', MatchesService);
 
-  function MatchesController ($scope, $timeout, MatchesService) {
+  function MatchesController ($scope, $cookies, $timeout, MatchesService) {
+    $cookies.emailedUsers = $cookies.emailedUsers || "";
+    $scope.emailedUsers = $cookies.emailedUsers;
+
     $scope.$on("profileUpdated", function() {
       $scope.isLoading = true;
       MatchesService.get().then(function(data) {
@@ -139,9 +142,21 @@ $(document).ready(function(){
     });
   }
 
+  function UserListItemController ($scope, $cookies) {
+    $scope.visited = $scope.emailedUsers.indexOf($scope.user.netid) > -1;
+
+    $scope.emailed = function() {
+      if (!$scope.visited) {
+        $cookies.emailedUsers = $cookies.emailedUsers + ", " + $scope.user.netid;
+        $scope.visited = true;
+      }
+    }
+  }
+
   angular
     .module('lodjersApp')
-    .controller('MatchesController', MatchesController);
+    .controller('MatchesController', MatchesController)
+    .controller('UserListItemController', UserListItemController);
 
   function ProfileController ($scope, $mdToast, UserService) {
     var self = this;
@@ -196,6 +211,8 @@ $(document).ready(function(){
 
   function userListItem () {
     return {
+      restrict: 'AE',
+      scope: true,
       replace: true,
       templateUrl: 'static/partials/user-list-item.html'
     };
