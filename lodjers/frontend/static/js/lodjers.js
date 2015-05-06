@@ -1,12 +1,12 @@
 $(document).ready(function(){
   // $('.profile-panel').pushpin({ top: $('.profile-panel').offset().top });
 
-  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 2 // Creates a dropdown of 15 years to control year
-  });
+  // $('.datepicker').pickadate({
+  //   selectMonths: true, // Creates a dropdown to control month
+  //   selectYears: 2 // Creates a dropdown of 15 years to control year
+  // });
 
-  $(".button-collapse").sideNav();
+  // $(".button-collapse").sideNav();
 });
 
 
@@ -26,27 +26,49 @@ $(document).ready(function(){
     }
   }
 
+  function inflection ($filter) {
+    return function(value) {
+      if (!value) {
+        return;
+      }
+      return value.replace(/\b[a-z](?!\s)/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+  }
+
   angular
     .module('lodjersFilters', [])
     .filter('gradYear', gradYear)
+    .filter('inflection', inflection)
 
-  angular.module('lodjersApp', ['lodjersFilters']);
+  angular.module('lodjersApp', ['lodjersFilters', 'ngMaterial', 'ngMdIcons', 'ngMessages']);
 
-  function config ($interpolateProvider) {
+  function config ($interpolateProvider, $mdThemingProvider) {
     $interpolateProvider
-    .startSymbol('{[')
-    .endSymbol(']}');
+      .startSymbol('{[')
+      .endSymbol(']}');
+
+    $mdThemingProvider.theme('default')
+      .primaryPalette('pink')
+      .accentPalette('orange');
   }
 
   angular
     .module('lodjersApp')
     .config(config);
 
-  function UserService ($http, $rootScope) {
+  function UserService ($http, $rootScope, $filter) {
     var transformDate = function(data) {
       data=angular.fromJson(data);
       if (data.user.start_date) {
         data.user.start_date = new Date(data.user.start_date);
+      }
+
+      if (data.user.city) {
+        data.user.city = $filter('inflection')(data.user.city);
+      }
+
+      if (data.user.joined_at) {
+        data.user.joined_at = new Date(data.user.joined_at);
       }
       return data;
     };
@@ -77,12 +99,13 @@ $(document).ready(function(){
     .module('lodjersApp')
     .factory('UserService', UserService);
 
-  function MatchesService ($http) {
+  function MatchesService ($http, $filter) {
     var transformDates = function(data) {
       data=angular.fromJson(data);
       angular.forEach(data.users, function(user) {
         user.joined_at = new Date(user.joined_at);
         user.start_date = new Date(user.start_date);
+        user.city = $filter('inflection')(user.city);
       });
 
       return data;
@@ -104,13 +127,14 @@ $(document).ready(function(){
     .module('lodjersApp')
     .factory('MatchesService', MatchesService);
 
-  function MatchesController ($scope, MatchesService) {
-    $scope.isLoading = true;
-
+  function MatchesController ($scope, $timeout, MatchesService) {
     $scope.$on("profileUpdated", function() {
+      $scope.isLoading = true;
       MatchesService.get().then(function(data) {
-        $scope.isLoading = false;
-        $scope.matches = data.users;
+        $timeout(function() {
+            $scope.isLoading = false;
+            $scope.matches = data.users;
+        }, 500);
       });
     });
   }
@@ -119,7 +143,17 @@ $(document).ready(function(){
     .module('lodjersApp')
     .controller('MatchesController', MatchesController);
 
-  function ProfileController ($scope, UserService) {
+  function ProfileController ($scope, $mdToast, UserService) {
+    var self = this;
+    self.cities        = loadAll();
+    self.selectedItem  = null;
+
+    $scope.querySearch = function(query) {
+      var results = query ? self.cities.filter( createFilterFor(query) ) : [];
+      return results;
+    };
+
+
     UserService.get().then(function(data) {
       $scope.user = data.user;
     });
@@ -127,9 +161,33 @@ $(document).ready(function(){
     $scope.submit = function() {
       UserService.put($scope.user).then(function(data) {
         $scope.user = data.user;
-        Materialize.toast("Saved changes!", 2000);
+        $mdToast.show(
+          $mdToast.simple()
+          .content('Saved!')
+          .position("top right")
+          .hideDelay(3000)
+        );
       });
     };
+
+    function loadAll() {
+      var allCities = 'Austin, Boston, Chicago, Dallas, Hanover, Houston, Los Angeles, New York, Philadelphia, San Francisco, Washington D.C., ';
+      return allCities.split(/, +/g).map( function (city) {
+        return {
+          value: city.toLowerCase(),
+          display: city
+        };
+      });
+    }
+    /**
+     * Create filter function for a query string
+     */
+    function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(city) {
+        return (city.value.indexOf(lowercaseQuery) !== -1);
+      };
+    }
   }
 
   angular

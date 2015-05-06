@@ -31,4 +31,4 @@ def finished_sf_user(request):
 
 @pytest.fixture()
 def ny_user(request):
-    return user_factories.SanFranciscoUserFactory(city="New York")
+    return user_factories.SanFranciscoUserFactory(city="new york")

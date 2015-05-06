@@ -6,6 +6,7 @@ js_lodjers = Bundle("js/lodjers.js",
 css_lodjers = Bundle("scss/lodjers.scss",
                         filters="pyscss", output="css/lodjers.css")
 
+
 def init_app(app):
     webassets = Environment(app)
     webassets.url = app.static_url_path

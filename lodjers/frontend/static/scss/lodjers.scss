@@ -1,9 +1,11 @@
-@import "vendor/materialize/components/color";
-
 form {
   padding: 10px;
 }
 
+md-list-item {
+  position: relative;
+}
+
 .visited {
-  @extend .grey-text;
+  fill: grey;
 }

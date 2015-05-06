@@ -1,35 +1,57 @@
-<form ng-submit="submit()"  ng-controller="ProfileController" class="z-depth-2">
-  <div class="row">
-    <div class="col s8">
-      <label for="nickname">Name</label>
-      <input placeholder="Placeholder" id="nickname" type="text" class="validate" ng-model="user.nickname">
+<form name="profileForm" ng-submit="submit()"  ng-controller="ProfileController" class="md-whiteframe-z3">
+  <div layout="row" layout-md="column">
+    <md-input-container flex="80" flex-md="100">
+      <label>Name</label>
+      <input name="nickname" type="text" ng-model="user.nickname" required>
+      <div ng-messages="profileForm.nickname.$error" role="alert">
+        <span ng-message="required">Required</span>
+      </div>
+    </md-input-container>
+    <md-input-container flex="20" flex-md="100">
+      <label>Class Year</label>
+      <input name="grad_year" type="number" class="validate" ng-model="user.grad_year" min="2000" max="2030" required>
+      <div ng-messages="profileForm.grad_year.$error" role="alert">
+        <span ng-message="required">Required</span>
+        <span ng-message="min">Please enter your full class year (i.e. 2015, not 15)</span>
+        <span ng-message="max">You're not that old! Enter a year between 2000 and 2500.</span>
+      </div>
+    </md-input-container>
+  </div>
+  <md-autocomplete flex
+      md-selected-item="ProfileController.selectedItem"
+      md-search-text="user.city"
+      md-items="item in querySearch(user.city)"
+      md-item-text="item.display"
+      md-floating-label="City"
+      ng-model="usercity"
+      name="city"
+      required>
+    <span md-highlight-text="ProfileController.searchText">{{item.display}}</span>
+    <div ng-messages="profileForm.city.$error" role="alert">
+      <span ng-message="required">Required</span>
     </div>
-    <div class="col s4">
-      <label for="grad_year">Year</label>
-      '<input id="grad_yer" type="text" class="validate" ng-model="user.grad_year">
-    </div>
-    <div class="col s12">
-      <label for="city">City</label>
-      <input id="city" type="text" class="validate" ng-model="user.city">
-    </div>
-    <div class="col s12">
-      <label for="start_date">Start Date</label>
-      <input id="start_date" type="date" class="datepicker" ng-model="user.start_date">
-    </div>
-    <div class="col s6">
-      <label for="time_period"># of Months</label>
-      <input id="time_period" type="text" class="validate" ng-model="user.time_period">
-    </div>
-    <div class="col s6">
-      <label for="number_of_roommates"># of Roommates</label>
-      <input id="number_of_roommates" type="text" class="validate" ng-model="user.number_of_roommates">
-    </div>
-    <div class="input-field col s6 m12 l6">
-      <input id="searching" type="checkbox" class="filled-in" ng-model="user.searching">
-      <label for="searching">Searching</label>
-    </div>
-    <div class="input-field col s6 m12 l6">
-      <input class="btn waves-effect waves-light" type="submit" id="submit" value="Update">
-    </div>
+  </md-autocomplete>
+  <div layout="row" layout-md="column">
+    <md-input-container flex="60" flex-md="100">
+      <label>Start Date</label>
+      <input name="start_date" type="date" class="datepicker" ng-model="user.start_date" required>
+      <div ng-messages="profileForm.start_date.$error" role="alert">
+        <span ng-message="required">Required</span>
+      </div>
+    </md-input-container>
+    <md-input-container flex="40" flex-md="100">
+      <label># of Months</label>
+      <input name="time_period" type="number" class="validate" ng-model="user.time_period" min="0" required>
+      <div ng-messages="profileForm.time_period.$error" role="alert">
+        <span ng-message="required">Required</span>
+        <span ng-message="min">Please enter months greater than 0.</span>
+      </div>
+    </md-input-container>
+  </div>
+  <div layout="row" layout-md="column">
+    <md-checkbox ng-model="user.searching" aria-label="Looking for a roommate?" flex="65" flex-md="100">
+      Looking for a roommate?
+    </md-checkbox>
+    <md-button class="md-raised md-primary" type="submit" flex="15" flex-md="100">Submit</md-button>
   </div>
 </form>
