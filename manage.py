@@ -35,6 +35,17 @@ def seed():
         db.session.commit()
 
 
+@manager.command
+def worker():
+    """
+    Starts redis queue worker. Requires redis-server
+    To run (in background): 'redis-server &'
+    To kill: 'redis-cli shutdown'
+    """
+    status = subprocess.call("rqworker default", shell=True)
+    sys.exit(status)
+
+
 manager.add_command('server', Server())
 manager.add_command('shell', Shell(make_context=_make_context))
 manager.add_command('db', MigrateCommand)

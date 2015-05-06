@@ -32,7 +32,7 @@ class UserAPI(Resource):
         self.reqparse.add_argument('grad_year', type=int, required=True)
         self.reqparse.add_argument('start_date', type=str, required=True)
         self.reqparse.add_argument('time_period', type=int, required=True)
-        self.reqparse.add_argument('searching', type=inputs.boolean)
+        self.reqparse.add_argument('searching', type=inputs.boolean, required=True)
         super(UserAPI, self).__init__()
 
     @login_required
@@ -43,6 +43,7 @@ class UserAPI(Resource):
     def put(self):
         args = self.reqparse.parse_args()
 
+        previously_searching = current_user.searching
         for k, v in args.iteritems():
             if k == 'start_date':
                 if v:
@@ -53,6 +54,9 @@ class UserAPI(Resource):
                     v = v.lower()
             setattr(current_user, k, v)
         db.session.commit()
+
+        if not previously_searching and current_user.searching:
+            current_user.send_new_matches_notifications()
 
         return {'user': marshal(current_user, user_fields)}
 

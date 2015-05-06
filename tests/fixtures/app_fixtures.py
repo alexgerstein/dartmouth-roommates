@@ -1,7 +1,10 @@
 import pytest
+from rq import SimpleWorker, Queue
+from rq import push_connection, pop_connection
 
-from lodjers import create_app
+from lodjers import create_app, create_redis_connection
 from lodjers.database import db as _db
+from lodjers.mail import mail
 
 from tests.factories import user_factories
 
@@ -40,7 +43,7 @@ def session(db, request):
     # begin a non-ORM transaction
     transaction = connection.begin()
 
-    options = dict(bind=connection)
+    options = dict(bind=connection, expire_on_commit=False)
     session = db.create_scoped_session(options)
     db.session = session
 
@@ -58,3 +61,26 @@ def session(db, request):
 def test_client(app, request):
     with app.test_client() as client:
         yield client
+
+
+@pytest.yield_fixture()
+def connection(request):
+    push_connection(create_redis_connection('testing'))
+    yield
+    pop_connection()
+
+
+@pytest.yield_fixture()
+def queue(connection, request):
+    yield Queue()
+
+
+@pytest.yield_fixture()
+def worker(queue, request):
+    yield SimpleWorker([queue])
+
+
+@pytest.yield_fixture()
+def outbox(request):
+    with mail.record_messages() as outbox:
+        yield outbox
