@@ -1,4 +1,4 @@
-<md-list-item class="md-3-line" layout="row">
+<md-list-item ng-controller="UserListItemController" class="md-3-line" layout="row">
   <div class="md-avatar">
     <ng-md-icon style="fill: lightpink" icon="radio_button_on" ng-if="user.new">
       <md-tooltip>
@@ -15,7 +15,7 @@
 
     <h4>Starting {{user.start_date | date : 'mediumDate'}} for {{user.time_period}} Months.</h4>
   </div>
-  <a flex="20" ng-class="{'visited': visited}" href="mailto:{{user.netid}}@dartmouth.edu?subject=Still looking for another roommate?&body=Hi {{user.nickname}},<br><br>I found your name through lodjers.com..." ng-click="visited = true" class="message secondary-content">
+  <a flex="20" ng-class="{'emailed': visited}" href="mailto:{{user.netid}}@dartmouth.edu?subject=Still looking for another roommate?&body=Hi {{user.nickname}},<br><br>I found your name through lodjers.com..." ng-click="emailed()" class="message secondary-content">
     <ng-md-icon class="md-secondary" icon="email" aria-label="Blitz!">
       <md-tooltip>
         Blitz!
