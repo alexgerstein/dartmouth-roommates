@@ -1,4 +1,11 @@
 <md-list-item class="md-3-line" layout="row">
+  <div class="md-avatar">
+    <ng-md-icon style="fill: lightpink" icon="radio_button_on" ng-if="user.new">
+      <md-tooltip>
+        New User!
+      </md-tooltip>
+    </ng-md-icon>
+  </div>
   <div flex="80" class="md-list-item-text">
     <h3>{{user.nickname}}, {{user.grad_year | gradYear}}</h3>
     <div ng-switch="user.searching">

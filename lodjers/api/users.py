@@ -4,6 +4,11 @@ from flask.ext.login import login_required, current_user, logout_user
 
 from lodjers.database import db
 
+
+class isNew(fields.Raw):
+    def output(self, key, user):
+        return current_user.last_visited <= user.joined_at
+
 user_fields = {
     'netid': fields.String,
     'full_name': fields.String,
@@ -13,7 +18,8 @@ user_fields = {
     'start_date': fields.String,
     'time_period': fields.Integer,
     'searching': fields.Boolean,
-    'joined_at': fields.DateTime
+    'joined_at': fields.DateTime,
+    'new': isNew
 }
 
 
@@ -62,4 +68,9 @@ class UserMatchesListAPI(Resource):
     @login_required
     def get(self):
         matches = current_user.get_roommate_matches()
-        return {'users': [marshal(user, user_fields) for user in matches]}
+        data = {'users': [marshal(user, user_fields) for user in matches]}
+
+        current_user.last_visited = datetime.now()
+        db.session.commit()
+
+        return data

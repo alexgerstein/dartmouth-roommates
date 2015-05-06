@@ -17,6 +17,7 @@ class User(db.Model):
     searching = db.Column(db.Boolean)
 
     email_updates = db.Column(db.Boolean)
+    last_visited = db.Column(db.DateTime)
 
     def __init__(self, full_name, netid, grad_year=None, city=None,
                  email_updates=True, searching=True, start_date=None,
@@ -31,6 +32,7 @@ class User(db.Model):
         self.searching = searching
         self.email_updates = email_updates
         self.joined_at = datetime.now()
+        self.last_visited = datetime.min
 
     def is_active(self):
         """True, as all users are active."""
