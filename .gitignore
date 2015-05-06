@@ -65,6 +65,7 @@ lodjers/frontend/static/.webassets-cache/
 
 # Database
 *.db
+*.rdb
 
 # Secret
 instance/

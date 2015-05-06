@@ -1,8 +1,16 @@
+import os
+from rq import Queue
+from lodjers import create_redis_connection
 from lodjers.database import db
+from lodjers.mail import welcome_notification, new_matches_notification
+
 from datetime import datetime, timedelta
 
-START_DATE_RANGE_MAX = 30
+START_DATE_RANGE_MAX = 30   # days
+MAX_EMAIL_FREQUENCY = 7     # days
 
+conn = create_redis_connection(os.environ.get("APP_CONFIG_FILE") or "development")
+q = Queue(connection=conn)
 
 class User(db.Model):
     netid = db.Column(db.String(15), primary_key=True)
@@ -18,10 +26,12 @@ class User(db.Model):
 
     email_updates = db.Column(db.Boolean)
     last_visited = db.Column(db.DateTime)
+    last_emailed = db.Column(db.DateTime)
+
 
     def __init__(self, full_name, netid, grad_year=None, city=None,
                  email_updates=True, searching=True, start_date=None,
-                 time_period=12):
+                 time_period=12, last_emailed=None):
         self.full_name = full_name
         self.nickname = full_name
         self.netid = netid
@@ -33,6 +43,8 @@ class User(db.Model):
         self.email_updates = email_updates
         self.joined_at = datetime.now()
         self.last_visited = datetime.min
+        self.last_emailed = last_emailed if last_emailed else \
+                            datetime.now() - timedelta(days=MAX_EMAIL_FREQUENCY / 2)
 
     def is_active(self):
         """True, as all users are active."""
@@ -50,7 +62,7 @@ class User(db.Model):
         """False, as anonymous users aren't supported."""
         return False
 
-    def get_roommate_matches(self):
+    def get_roommate_matches(self, for_email=False):
         if not self.start_date or not self.city:
             return []
 
@@ -61,5 +73,17 @@ class User(db.Model):
                                   .filter(User.netid != self.netid) \
                                   .filter(User.start_date.between(earliest_date, latest_date))               \
                                   .filter(User.searching)           \
-                                  .all()
-        return matched_users
+
+        if for_email:
+            matched_users = matched_users.filter(User.last_emailed <= datetime.now() - timedelta(days=MAX_EMAIL_FREQUENCY))
+
+        return matched_users.all()
+
+    def send_welcome_notification(self):
+        q.enqueue(welcome_notification, self)
+
+    def send_new_matches_notifications(self):
+        for new_match in self.get_roommate_matches(for_email=True):
+            q.enqueue(new_matches_notification, self, new_match)
+            new_match.last_emailed = datetime.now()
+            db.session.commit()

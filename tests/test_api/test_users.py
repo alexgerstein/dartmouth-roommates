@@ -24,13 +24,29 @@ class TestUserAPI(TestBase):
         data = dict(nickname="Alex",
                     start_date=datetime.now().date(),
                     city="New York", grad_year=2015,
-                    time_period=10)
+                    time_period=10, searching=True)
         put = test_client.put('/api/user', data=data)
         self.check_valid_header_type(put.headers)
         data = json.loads(put.data)
-        print data
         assert data['user']['nickname'] == "Alex"
         assert data['user']['netid'] == user.netid
+
+    def test_put_new_searcher_emails_matches(self, test_client, worker, outbox,
+                                             sf_users, finished_sf_user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = finished_sf_user.netid
+
+        data = dict(nickname=finished_sf_user.nickname,
+                    start_date=finished_sf_user.start_date,
+                    city=finished_sf_user.city,
+                    grad_year=finished_sf_user.grad_year,
+                    time_period=finished_sf_user.time_period,
+                    searching=True)
+        put = test_client.put('/api/user', data=data)
+        self.check_valid_header_type(put.headers)
+        worker.work(burst=True)
+        assert len(outbox) == 5
+        assert "You have new potential roommate matches" in outbox[0].subject
 
     def test_delete_user(self, test_client, user):
         with test_client.session_transaction() as sess:

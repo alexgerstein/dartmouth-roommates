@@ -1,4 +1,5 @@
 import os
+import redis
 from flask import Flask
 
 
@@ -39,3 +40,8 @@ def create_app(env=None):
     app.register_blueprint(api_bp)
 
     return app
+
+
+def create_redis_connection(env=None):
+    return redis.from_url(os.getenv('REDISTOGO_URL')) if env == "staging" \
+           else redis.Redis()

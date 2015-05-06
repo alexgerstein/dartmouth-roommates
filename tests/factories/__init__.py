@@ -4,4 +4,4 @@ from factory.alchemy import SQLAlchemyModelFactory
 
 from lodjers.database import db
 
-import datetime
+from datetime import datetime, date

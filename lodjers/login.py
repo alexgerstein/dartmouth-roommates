@@ -9,6 +9,7 @@ from lxml import etree
 from lodjers.database import db
 from lodjers.models import User
 
+
 flask_cas = Blueprint('flask_cas', __name__, template_folder='templates')
 
 CAS_URL = 'https://login.dartmouth.edu/cas/'
@@ -54,6 +55,9 @@ def login():
             user = User(user_data['name'], user_data['netid'])
             db.session.add(user)
             db.session.commit()
+
+            user.send_welcome_notification()
+
         login_user(user)
     else:
         return cas_login(callback_url)
