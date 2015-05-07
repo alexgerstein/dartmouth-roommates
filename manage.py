@@ -2,14 +2,16 @@ import os
 import sys
 import subprocess
 from datetime import datetime
-from lodjers import create_app
+from lodjers import create_app, create_redis_connection
 from lodjers.database import db
 from lodjers.models import User
 from flask.ext.script import Manager, Shell, Server
 from flask.ext.migrate import MigrateCommand
 from flask.ext.assets import ManageAssets
+from rq import Worker, Queue, Connection
 
 app = create_app(os.environ.get("APP_CONFIG_FILE") or "development")
+conn = create_redis_connection(os.environ.get("APP_CONFIG_FILE") or "development")
 manager = Manager(app)
 
 
@@ -42,8 +44,10 @@ def worker():
     To run (in background): 'redis-server &'
     To kill: 'redis-cli shutdown'
     """
-    status = subprocess.call("rqworker default", shell=True)
-    sys.exit(status)
+    listen = ['default']
+    with Connection(conn):
+        worker = Worker(map(Queue, listen))
+        worker.work()
 
 
 manager.add_command('server', Server())
