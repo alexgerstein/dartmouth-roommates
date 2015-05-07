@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<md-toolbar class="md-theme-light">
+  <div class="md-toolbar-tools">
+    <span flex="45"></span>
+    <a href="/"><span flex="10">lodjers</span></a>
+    <span flex></span>
+    <md-button>
+      {% if current_user.is_authenticated() %}
+      <a href="/logout">Logout</a>
+      {% else %}
+      <a href="/login">Login</a>
+      {% endif %}
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content class="md-default-theme">
+  <div layout-sm="column" layout-gt-sm="row" layout-align-gt-md="center" layout-padding>
+    <div flex="33" flex-order="1" flex-order-gt-sm="2">
+      <div class="profile-panel">
+        <h3>Your Profile</h3>
+        <profile-form></profile-form>
+      </div>
+    </div>
+
+    <div flex="66" flex-gt-md="50" flex-order="2" flex-order-gt-sm="1" ng-controller="MatchesController" layout-padding>
+      <h3>Your Matches</h3>
+      <div ng-switch="isLoading">
+        <div ng-switch-when="true">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+        <div ng-switch-when="false">
+          <div ng-if="!matches.length">
+            <h5>It looks like you don't have any matches yet!</h5>
+            <p>Edit your profile on the right to find more potential roommates.</p>
+          </div>
+          <md-list>
+            <user-list-item ng-repeat="user in matches | orderBy:'-joined_at'" user='user' emailedUsers='emailedUsers'></user-list-item>
+          </md-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</md-content>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 import os
 import sys
 import subprocess
-from datetime import datetime
+from faker import Faker
 from lodjers import create_app, create_redis_connection
 from lodjers.database import db
 from lodjers.models import User
@@ -13,6 +13,7 @@ from rq import Worker, Queue, Connection
 app = create_app(os.environ.get("APP_CONFIG_FILE") or "development")
 conn = create_redis_connection(os.environ.get("APP_CONFIG_FILE") or "development")
 manager = Manager(app)
+fake = Faker()
 
 
 def _make_context():
@@ -29,10 +30,13 @@ def tests():
 
 @manager.command
 def seed():
-    for i in range(10):
-        user = User(full_name="User %d" % i, netid="%d" % i,
-                    city="san francisco", start_date=datetime.now(),
-                    grad_year=2015)
+    for i in range(100):
+        user = User(full_name="%s %s" % (fake.first_name(), fake.last_name()),
+                    netid=fake.bothify('?#####?'),
+                    city=fake.random_element(('new york city', 'san francisco',
+                                              'chicago')),
+                    start_date=fake.date_time_this_month(),
+                    grad_year=fake.random_element(('2015', '2016', '2017')))
         db.session.add(user)
         db.session.commit()
 

@@ -36,7 +36,7 @@
       .endSymbol(']}');
 
     $mdThemingProvider.theme('default')
-      .primaryPalette('pink')
+      .primaryPalette('green')
       .accentPalette('orange');
   }
 
