@@ -4,7 +4,7 @@ from flask.ext.login import login_required, current_user, logout_user
 
 from lodjers.database import db
 
-CITY_ABBREVIATIONS = {'nyc': 'new york city', 'ny': 'new york', 'sf': "san francisco", 'la': 'los angeles', 'chi': 'chicago'}
+CITY_ABBREVIATIONS = {'nyc': 'new york city', 'ny': 'new york city', 'sf': "san francisco", 'la': 'los angeles', 'chi': 'chicago', 'n.y.c': 'new york city', 'washington dc': 'washington d.c.', 'd.c.': 'washington d.c.', 'dc': 'washington d.c.'}
 
 
 class isNew(fields.Raw):

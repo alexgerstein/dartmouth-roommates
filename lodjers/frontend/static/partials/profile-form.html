@@ -1,4 +1,4 @@
-<form name="profileForm" ng-submit="submit()"  ng-controller="ProfileController" class="md-whiteframe-z3">
+<form name="profileForm" ng-submit="submit()"  ng-controller="ProfileController" class="md-whiteframe-z3" layout-padding>
   <div layout="row" layout-md="column">
     <md-input-container flex="80" flex-md="100">
       <label>Name</label>
@@ -17,20 +17,22 @@
       </div>
     </md-input-container>
   </div>
-  <md-autocomplete flex
-      md-selected-item="ProfileController.selectedItem"
-      md-search-text="user.city"
-      md-items="item in querySearch(user.city)"
-      md-item-text="item.display"
-      md-floating-label="City"
-      ng-model="usercity"
-      name="city"
-      required>
-    <span md-highlight-text="ProfileController.searchText">{{item.display}}</span>
-    <div ng-messages="profileForm.city.$error" role="alert">
-      <span ng-message="required">Required</span>
-    </div>
-  </md-autocomplete>
+  <div layout="row" layout-md="column">
+    <md-autocomplete flex
+        md-selected-item="ProfileController.selectedItem"
+        md-search-text="user.city"
+        md-items="item in querySearch(user.city)"
+        md-item-text="item.display"
+        md-floating-label="City"
+        ng-model="usercity"
+        name="city"
+        required>
+      <span md-highlight-text="ProfileController.searchText">{{item.display}}</span>
+      <div ng-messages="profileForm.city.$error" role="alert">
+        <span ng-message="required">Required</span>
+      </div>
+    </md-autocomplete>
+  </div>
   <div layout="row" layout-md="column">
     <md-input-container flex="60" flex-md="100">
       <label>Start Date</label>
@@ -50,7 +52,7 @@
   </div>
   <div layout="row" layout-md="column">
     <md-checkbox ng-model="user.searching" aria-label="Looking for a roommate?" flex="65" flex-md="100">
-      Looking for a roommate?
+      Looking for roommates?
     </md-checkbox>
     <md-button class="md-raised md-primary" type="submit" flex="15" flex-md="100">Submit</md-button>
   </div>

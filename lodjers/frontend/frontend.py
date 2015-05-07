@@ -1,10 +1,15 @@
 from . import bp
 from flask import render_template
-from lodjers.models import User
+from flask.ext.login import login_required
 
 
 @bp.route('/')
 @bp.route('/index')
 def index():
-    return render_template("index.html",
-                           user_count=format(User.query.count(), ",d"))
+    return render_template("index.html")
+
+
+@bp.route('/profile')
+@login_required
+def profile():
+    return render_template("profile.html")
