@@ -43,6 +43,21 @@ class TestUserAPI(TestBase):
         assert data['user']['nickname'] == "Alex"
         assert data['user']['netid'] == user.netid
 
+    def test_put_user_city_abbreviation(self, test_client, user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = user.netid
+
+        data = dict(nickname="Alex",
+                    start_date=datetime.now().date(),
+                    city="SF", grad_year=2015,
+                    time_period=10, searching=True)
+        put = test_client.put('/api/user', data=data)
+        self.check_valid_header_type(put.headers)
+        data = json.loads(put.data)
+        assert data['user']['nickname'] == "Alex"
+        assert data['user']['netid'] == user.netid
+        assert data['user']['city'] == "san francisco"
+
     def test_put_new_searcher_emails_matches(self, test_client, worker, outbox,
                                              sf_users, finished_sf_user):
         with test_client.session_transaction() as sess:
