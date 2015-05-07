@@ -4,6 +4,8 @@ from flask.ext.login import login_required, current_user, logout_user
 
 from lodjers.database import db
 
+CITY_ABBREVIATIONS = {'nyc': 'new york city', 'ny': 'new york', 'sf': "san francisco", 'la': 'los angeles', 'chi': 'chicago'}
+
 
 class isNew(fields.Raw):
     def output(self, key, user):
@@ -55,6 +57,9 @@ class UserAPI(Resource):
             if k == 'city':
                 if v:
                     v = v.lower()
+
+                if v in CITY_ABBREVIATIONS:
+                    v = CITY_ABBREVIATIONS[v]
             setattr(current_user, k, v)
         db.session.commit()
 
