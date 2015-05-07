@@ -87,3 +87,6 @@ class User(db.Model):
             q.enqueue(new_matches_notification, self, new_match)
             new_match.last_emailed = datetime.now()
             db.session.commit()
+
+    def __repr__(self):
+        return "%s (%s) - %s" % (self.full_name, self.netid, self.city)

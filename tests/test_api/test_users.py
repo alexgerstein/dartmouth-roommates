@@ -17,6 +17,18 @@ class TestUserAPI(TestBase):
         data = json.loads(get.data)
         assert data['user']['netid'] == user.netid
 
+    def test_get_user_missing_last_visited(self, test_client, user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = user.netid
+
+        user.last_visited = None
+
+        get = test_client.get('/api/user')
+        self.check_valid_header_type(get.headers)
+        data = json.loads(get.data)
+        assert data['user']['netid'] == user.netid
+        assert data['user']['new'] == True
+
     def test_put_user(self, test_client, user):
         with test_client.session_transaction() as sess:
             sess['user_id'] = user.netid

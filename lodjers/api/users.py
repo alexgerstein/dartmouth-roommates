@@ -7,6 +7,9 @@ from lodjers.database import db
 
 class isNew(fields.Raw):
     def output(self, key, user):
+        if not current_user.last_visited:
+            return True
+
         return current_user.last_visited <= user.joined_at
 
 user_fields = {
