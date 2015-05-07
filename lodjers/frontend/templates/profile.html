@@ -7,11 +7,7 @@
     <a href="/"><span flex="10">lodjers</span></a>
     <span flex></span>
     <md-button>
-      {% if current_user.is_authenticated() %}
       <a href="/logout">Logout</a>
-      {% else %}
-      <a href="/login">Login</a>
-      {% endif %}
     </md-button>
   </div>
 </md-toolbar>
