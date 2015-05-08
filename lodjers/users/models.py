@@ -1,5 +1,6 @@
 import os
 from rq import Queue
+from sqlalchemy import Enum
 from lodjers import create_redis_connection
 from lodjers.database import db
 from lodjers.mail import welcome_notification, new_matches_notification
@@ -17,6 +18,7 @@ class User(db.Model):
     full_name = db.Column(db.String(200))
     nickname = db.Column(db.String(64))
     joined_at = db.Column(db.DateTime)
+    gender = db.Column(Enum("M", "F", name="gender_enum"))
 
     city = db.Column(db.String(200))
     start_date = db.Column(db.Date)
@@ -31,10 +33,11 @@ class User(db.Model):
 
     def __init__(self, full_name, netid, grad_year=None, city=None,
                  email_updates=True, searching=True, start_date=None,
-                 time_period=12, last_emailed=None):
+                 time_period=12, last_emailed=None, gender=None):
         self.full_name = full_name
         self.nickname = full_name
         self.netid = netid
+        self.gender = gender
         self.grad_year = grad_year
         self.start_date = start_date
         self.city = city
@@ -76,7 +79,8 @@ class User(db.Model):
                                                        latest_date))
 
         if for_email:
-            matched_users = matched_users.filter(User.searching)    \
+            matched_users = matched_users.filter(User.searching)             \
+                                         .filter(User.gender == self.gender) \
                                          .filter(User.last_emailed <= datetime.now() - timedelta(days=MAX_EMAIL_FREQUENCY))
 
         return matched_users.all()

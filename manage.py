@@ -35,6 +35,7 @@ def seed(num=100):
     for i in range(num):
         user = User(full_name="%s %s" % (fake.first_name(), fake.last_name()),
                     netid=fake.bothify('?#####?'),
+                    gender=fake.random_element(["M", "F"]),
                     city=fake.random_element(('new york city', 'san francisco',
                                               'chicago')),
                     start_date=fake.date_time_this_month(),
