@@ -36,7 +36,8 @@ def seed(num=100):
                     city=fake.random_element(('new york city', 'san francisco',
                                               'chicago')),
                     start_date=fake.date_time_this_month(),
-                    grad_year=fake.random_element(('2015', '2016', '2017')))
+                    grad_year=fake.random_element(('2015', '2016', '2017')),
+                    searching=fake.boolean())
         db.session.add(user)
         db.session.commit()
 

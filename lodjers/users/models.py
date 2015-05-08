@@ -62,7 +62,7 @@ class User(db.Model):
         """False, as anonymous users aren't supported."""
         return False
 
-    def get_roommate_matches(self, for_email=False):
+    def get_matches(self, for_email=False):
         if not self.start_date or not self.city:
             return []
 
@@ -71,11 +71,13 @@ class User(db.Model):
 
         matched_users = User.query.filter(User.city == self.city)   \
                                   .filter(User.netid != self.netid) \
-                                  .filter(User.start_date.between(earliest_date, latest_date))               \
-                                  .filter(User.searching)           \
+                                  .filter(User.start_date
+                                              .between(earliest_date,
+                                                       latest_date))
 
         if for_email:
-            matched_users = matched_users.filter(User.last_emailed <= datetime.now() - timedelta(days=MAX_EMAIL_FREQUENCY))
+            matched_users = matched_users.filter(User.searching)    \
+                                         .filter(User.last_emailed <= datetime.now() - timedelta(days=MAX_EMAIL_FREQUENCY))
 
         return matched_users.all()
 
@@ -83,7 +85,7 @@ class User(db.Model):
         q.enqueue(welcome_notification, self)
 
     def send_new_matches_notifications(self):
-        for new_match in self.get_roommate_matches(for_email=True):
+        for new_match in self.get_matches(for_email=True):
             q.enqueue(new_matches_notification, self, new_match)
             new_match.last_emailed = datetime.now()
             db.session.commit()

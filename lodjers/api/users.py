@@ -79,7 +79,7 @@ class UserAPI(Resource):
 class UserMatchesListAPI(Resource):
     @login_required
     def get(self):
-        matches = current_user.get_roommate_matches()
+        matches = current_user.get_matches()
         data = {'users': [marshal(user, user_fields) for user in matches]}
 
         current_user.last_visited = datetime.now()

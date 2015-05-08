@@ -118,6 +118,7 @@
   function MatchesController ($scope, $cookies, $timeout, MatchesService) {
     $cookies.emailedUsers = $cookies.emailedUsers || "";
     $scope.emailedUsers = $cookies.emailedUsers;
+    $scope.searchersOnly = true;
 
     $scope.$on("profileUpdated", function() {
       $scope.isLoading = true;
