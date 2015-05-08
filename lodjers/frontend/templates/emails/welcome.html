@@ -1,1 +1,24 @@
-<p>Welcome to lodjers!</p>
+<h1><img src="{{ url_for('static', filename='favicon.ico', _external = True) }}" style="width: 25px; height: 25px;">lodjers</h1>
+
+<p>Welcome {{user.nickname.split(" ")[0]}},</p>
+
+<p>
+  Finding a roommate has never been easier.
+</p>
+
+<p>
+   With lodjers, you can let the roommate matches come to you. No more awkward posts on the Class of {{user.grad_year}} Facebook group. lodjers helps you find roommates that match your off-term and post-graduation plans! Even better, it allows you to decide who to reach out to.
+</p>
+
+<p>
+  lodjers was built with the goal to make finding roommates as easy as possible. If you have any ideas for how to improve the site, please don't hesitate to reach out at <a href="mailto:support@lodjers.com">support@lodjers.com</a>.
+</p>
+
+<p>
+  Now, it's time to find your next roommate. Be sure to <a href="{{url_for('frontend.profile', _external = True)}}">complete your profile</a> in order to start receiving matches.
+</p>
+
+<p>Happy Searching,</p>
+
+<p>Alex<br/>
+<a href="www.lodjers.com">lodjers.com</a></p>

@@ -1,1 +1,13 @@
-Welcome to lodjers!
+Welcome {{user.nickname.split(" ")[0]}},
+
+Finding a roommate has never been easier.
+
+With lodjers, you can let the roommate matches come to you. No more awkward posts on the Class of {{user.grad_year}} Facebook group. lodjers helps you find roommates that match your off-term and post-graduation plans! Even better, it allows you to decide who to reach out to.
+
+lodjers was built with the goal to make finding roommates as easy as possible. If you have any ideas for how to improve the site, please don't hesitate to reach out at support@lodjers.com.
+
+Now, it's time to find your next roommate. Be sure to complete your profile in order to start receiving matches.
+
+Happy Searching,
+Alex
+lodjers.com
