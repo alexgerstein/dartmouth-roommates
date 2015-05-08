@@ -19,6 +19,11 @@ def sf_users(request):
 
 
 @pytest.fixture()
+def female_sf_user(request):
+    return user_factories.SanFranciscoUserFactory(gender="F")
+
+
+@pytest.fixture()
 def old_sf_user(request):
     return user_factories. \
            SanFranciscoUserFactory(start_date=datetime.date(2000, 1, 1))

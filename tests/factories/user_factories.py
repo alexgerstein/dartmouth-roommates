@@ -11,6 +11,7 @@ class UserFactory(SQLAlchemyModelFactory):
 
     netid = factory.fuzzy.FuzzyText(length=7, chars=string.hexdigits)
     full_name = factory.Sequence(lambda n: 'User %d' % n)
+    gender = "M"
 
     city = factory.Sequence(lambda n: 'city %d' % n)
     start_date = factory.fuzzy.FuzzyDate(date(2015, 6, 10),

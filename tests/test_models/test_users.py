@@ -18,3 +18,8 @@ class TestUserModel:
         worker.work(burst=True)
         assert len(outbox) == 1
         assert "Welcome" in outbox[0].subject
+
+    def test_user_send_new_matches_wrong_gender(self, outbox, sf_user,
+                                                female_sf_user):
+        sf_user.send_new_matches_notifications()
+        assert len(outbox) == 0

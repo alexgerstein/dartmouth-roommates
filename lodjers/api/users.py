@@ -14,17 +14,24 @@ class isNew(fields.Raw):
 
         return current_user.last_visited <= user.joined_at
 
+
+class isGenderMatch(fields.Raw):
+    def output(self, key, user):
+        return current_user.gender == user.gender
+
 user_fields = {
     'netid': fields.String,
     'full_name': fields.String,
     'nickname': fields.String,
+    'gender': fields.String,
     'grad_year': fields.Integer(default=None),
     'city': fields.String,
     'start_date': fields.String,
     'time_period': fields.Integer,
     'searching': fields.Boolean,
     'joined_at': fields.DateTime,
-    'new': isNew
+    'new': isNew,
+    'gender_match': isGenderMatch
 }
 
 
@@ -34,10 +41,12 @@ class UserAPI(Resource):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('nickname', type=str, required=True)
         self.reqparse.add_argument('city', type=str)
+        self.reqparse.add_argument('gender', type=str, required=True)
         self.reqparse.add_argument('grad_year', type=int, required=True)
         self.reqparse.add_argument('start_date', type=str, required=True)
         self.reqparse.add_argument('time_period', type=int, required=True)
-        self.reqparse.add_argument('searching', type=inputs.boolean, required=True)
+        self.reqparse.add_argument('searching', type=inputs.boolean,
+                                   required=True)
         super(UserAPI, self).__init__()
 
     @login_required
@@ -50,16 +59,25 @@ class UserAPI(Resource):
 
         previously_searching = current_user.searching
         for k, v in args.iteritems():
+
             if k == 'start_date':
                 if v:
                     v = v.split('T')[0]
                     v = datetime.strptime(v, "%Y-%m-%d")
+
             if k == 'city':
                 if v:
                     v = v.lower()
+                    if v in CITY_ABBREVIATIONS:
+                        v = CITY_ABBREVIATIONS[v]
 
-                if v in CITY_ABBREVIATIONS:
-                    v = CITY_ABBREVIATIONS[v]
+            if k == 'gender':
+                if v:
+                    if v != "M" and v != "F":
+                        return {'errors': {'gender': [
+                                           'Gender must be M or F.']}}, 422
+                    v = v.upper()
+
             setattr(current_user, k, v)
         db.session.commit()
 
