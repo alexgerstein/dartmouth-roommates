@@ -14,7 +14,7 @@ flask_cas = Blueprint('flask_cas', __name__, template_folder='templates')
 
 CAS_URL = 'https://login.dartmouth.edu/cas/'
 login_manager = LoginManager()
-login_manager.login_view = None
+login_manager.login_view = "flask_cas.login"
 
 
 def recursive_dict(element):
