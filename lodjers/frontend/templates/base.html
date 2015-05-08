@@ -14,9 +14,21 @@
   </head>
   <body>
 
-      {% block content %}{% endblock %}
+    <md-toolbar class="md-theme-light">
+      <div class="md-toolbar-tools">
+        <span>lodjers</span>
+        <!-- fill up the space between left and right area -->
+        <span flex></span>
+        {% if current_user.is_authenticated() %}
+        <a href="/profile"><md-button>Profile</md-button></a>
+        <a href="/logout"><md-button>Logout</md-button></a>
+        {% else %}
+        <a href="/login"><md-button>Login</md-button></a>
+        {% endif %}
+      </div>
+    </md-toolbar>
 
-    </div>
+    {% block content %}{% endblock %}
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
