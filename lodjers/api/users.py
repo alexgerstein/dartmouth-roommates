@@ -23,6 +23,7 @@ user_fields = {
     'netid': fields.String,
     'full_name': fields.String,
     'nickname': fields.String,
+    'email': fields.String,
     'gender': fields.String,
     'grad_year': fields.Integer(default=None),
     'city': fields.String,
@@ -31,7 +32,7 @@ user_fields = {
     'searching': fields.Boolean,
     'joined_at': fields.DateTime,
     'new': isNew,
-    'gender_match': isGenderMatch
+    'gender_match': isGenderMatch,
 }
 
 
@@ -59,6 +60,13 @@ class UserAPI(Resource):
 
         previously_searching = current_user.searching
         for k, v in args.iteritems():
+
+            if k == 'grad_year':
+                if v:
+                    if v < 2000 or v > 2030:
+                        return {'errors':
+                                {'grad_year': [
+                                 'Year must be between 2000 and 2030']}}, 422
 
             if k == 'start_date':
                 if v:

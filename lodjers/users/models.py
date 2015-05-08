@@ -65,6 +65,15 @@ class User(db.Model):
         """False, as anonymous users aren't supported."""
         return False
 
+    @property
+    def email(self):
+        if not self.grad_year:
+            return self.netid + "@dartmouth.edu"
+
+        split_name = map(lambda x: x.strip('.'), self.full_name.split())
+        join_name = ".".join(split_name) + '.' + str(self.grad_year % 2000)
+        return join_name + "@dartmouth.edu"
+
     def get_matches(self, for_email=False):
         if not self.start_date or not self.city:
             return []

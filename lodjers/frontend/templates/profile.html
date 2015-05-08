@@ -36,7 +36,7 @@
               <p>Edit your profile on the right to find more potential roommates.</p>
             </div>
             <md-list>
-              <user-list-item ng-repeat="user in matches | orderBy:'-joined_at'" ng-hide="searchersOnly && (!user.searching || !user.gender_match)" user='user' emailedUsers='emailedUsers'></user-list-item>
+              <user-list-item ng-repeat="user in matches | orderBy:'-joined_at'" ng-hide="searchersOnly && (!user.searching || !user.gender_match)" user='user' searchersOnly='searchersOnly' emailedUsers='emailedUsers'></user-list-item>
             </md-list>
           </div>
         </div>

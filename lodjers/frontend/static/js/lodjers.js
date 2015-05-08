@@ -118,7 +118,7 @@
   function MatchesController ($scope, $cookies, $timeout, MatchesService) {
     $cookies.emailedUsers = $cookies.emailedUsers || "";
     $scope.emailedUsers = $cookies.emailedUsers;
-    $scope.searchersOnly = true;
+    $scope.searchersOnly = false;
 
     $scope.$on("profileUpdated", function() {
       $scope.isLoading = true;
@@ -133,6 +133,17 @@
 
   function UserListItemController ($scope, $cookies) {
     $scope.visited = $scope.emailedUsers.indexOf($scope.user.netid) > -1;
+
+    $scope.emailLink = function() {
+      var subject;
+      if ($scope.searchersOnly) {
+        subject = "Still looking for another roommate?";
+      } else {
+        subject = "Moving to " + $scope.user.city;
+      }
+
+      return "mailto:" + $scope.user.email + "?subject=" + subject + "&body=Hi " + $scope.user.nickname.split(' ')[0] +",<br><br>I saw on lodjers.com that you're also going to " + $scope.user.city + ".";
+    }
 
     $scope.emailed = function() {
       if (!$scope.visited) {

@@ -32,8 +32,10 @@ def tests():
 
 @manager.command
 def seed(num=100):
-    for i in range(num):
-        user = User(full_name="%s %s" % (fake.first_name(), fake.last_name()),
+    for i in range(int(num)):
+        user = User(full_name="%s %s. %s" % (fake.first_name(),
+                                             fake.random_letter().upper(),
+                                             fake.last_name()),
                     netid=fake.bothify('?#####?'),
                     gender=fake.random_element(["M", "F"]),
                     city=fake.random_element(('new york city', 'san francisco',

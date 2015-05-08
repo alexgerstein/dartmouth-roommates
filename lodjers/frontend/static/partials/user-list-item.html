@@ -15,7 +15,7 @@
 
     <h4>Starting {{user.start_date | date : 'mediumDate'}} for {{user.time_period}} Months.</h4>
   </div>
-  <a flex="20" ng-class="{'emailed': visited}" href="mailto:{{user.netid}}@dartmouth.edu?subject=Still looking for another roommate?&body=Hi {{user.nickname}},<br><br>I found your name through lodjers.com..." ng-click="emailed()" class="message secondary-content">
+  <a flex="20" ng-class="{'emailed': visited}" ng-href="{{emailLink()}}" ng-click="emailed()" class="message secondary-content">
     <ng-md-icon class="md-secondary" icon="email" aria-label="Blitz!">
       <md-tooltip>
         Blitz!

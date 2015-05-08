@@ -74,6 +74,21 @@ class TestUserAPI(TestBase):
         assert put.status_code == 422
         assert "M or F" in data['errors']['gender'][0]
 
+    def test_put_user_year_out_of_range(self, test_client, user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = user.netid
+
+        data = dict(nickname="Alex",
+                    start_date=datetime.now().date(),
+                    city="New York", grad_year=12,
+                    time_period=10, searching=True,
+                    gender="M")
+        put = test_client.put('/api/user', data=data)
+        self.check_valid_header_type(put.headers)
+        data = json.loads(put.data)
+        assert put.status_code == 422
+        assert "Year must be between" in data['errors']['grad_year'][0]
+
     def test_put_new_searcher_emails_matches(self, test_client, worker, outbox,
                                              sf_users, finished_sf_user):
         with test_client.session_transaction() as sess:
