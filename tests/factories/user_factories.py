@@ -1,19 +1,21 @@
 from tests.factories import *
 
-import string
+from faker import Factory as FakerFactory
 
 from lodjers.models import User
+
+faker = FakerFactory.create()
 
 
 class UserFactory(SQLAlchemyModelFactory):
     class Meta:
         model = User
 
-    netid = factory.fuzzy.FuzzyText(length=7, chars=string.hexdigits)
-    full_name = factory.Sequence(lambda n: 'User %d' % n)
+    netid = factory.LazyAttribute(lambda x: faker.bothify('?#####?'))
+    full_name = factory.Sequence(lambda n: faker.name())
     gender = "M"
 
-    city = factory.Sequence(lambda n: 'city %d' % n)
+    city = factory.Sequence(lambda n: faker.city())
     start_date = factory.fuzzy.FuzzyDate(date(2015, 6, 10),
                                          date(2018, 6, 10))
     time_period = factory.fuzzy.FuzzyInteger(24)

@@ -33,14 +33,22 @@ def tests():
 @manager.command
 def seed(num=100):
     for i in range(int(num)):
-        user = User(full_name="%s %s. %s" % (fake.first_name(),
-                                             fake.random_letter().upper(),
-                                             fake.last_name()),
-                    netid=fake.bothify('?#####?'),
-                    gender=fake.random_element(["M", "F"]),
+
+        gender = fake.random_element(["M", "F"])
+
+        if gender == "M":
+            full_name = "%s %s. %s" % (fake.first_name_male(),
+                                       fake.random_letter().upper(),
+                                       fake.last_name_male())
+        else:
+            full_name = "%s %s. %s" % (fake.first_name_female(),
+                                       fake.random_letter().upper(),
+                                       fake.last_name_female())
+
+        user = User(full_name=full_name, netid=fake.bothify('?#####?'),
+                    gender=gender, start_date=fake.date_time_this_month(),
                     city=fake.random_element(('new york city', 'san francisco',
                                               'chicago')),
-                    start_date=fake.date_time_this_month(),
                     grad_year=fake.random_element(('2015', '2016', '2017')),
                     searching=fake.boolean())
         db.session.add(user)
