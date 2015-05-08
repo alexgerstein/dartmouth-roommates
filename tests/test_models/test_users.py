@@ -5,7 +5,7 @@ class TestUserModel:
 
     def test_user_matches_missing_city(self, db, user):
         user.city = None
-        assert user.get_roommate_matches() == []
+        assert user.get_matches() == []
 
     def test_all_users_active(self, user):
         assert user.is_active() == True

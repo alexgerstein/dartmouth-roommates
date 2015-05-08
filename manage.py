@@ -24,8 +24,10 @@ def _make_context():
 
 @manager.command
 def tests():
-    status = subprocess.call("bash ./scripts/test.sh", shell=True)
-    sys.exit(status)
+    subprocess.call("redis-server &", shell=True)
+    test_status = subprocess.call("bash ./scripts/test.sh", shell=True)
+    subprocess.call("redis-cli shutdown", shell=True)
+    sys.exit(test_status)
 
 
 @manager.command
@@ -36,7 +38,8 @@ def seed(num=100):
                     city=fake.random_element(('new york city', 'san francisco',
                                               'chicago')),
                     start_date=fake.date_time_this_month(),
-                    grad_year=fake.random_element(('2015', '2016', '2017')))
+                    grad_year=fake.random_element(('2015', '2016', '2017')),
+                    searching=fake.boolean())
         db.session.add(user)
         db.session.commit()
 

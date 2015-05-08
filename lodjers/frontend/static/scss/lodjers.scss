@@ -1,9 +1,17 @@
+.profile md-toolbar {
+  padding: 0 10%;
+}
+
 md-list-item {
   position: relative;
 }
 
 .emailed {
   fill: lightgrey;
+}
+
+.searchersOnly {
+  margin: 1em 0;
 }
 
 /*
