@@ -18,7 +18,7 @@ class User(db.Model):
     full_name = db.Column(db.String(200))
     nickname = db.Column(db.String(64))
     joined_at = db.Column(db.DateTime)
-    gender = db.Column(Enum("M", "F", name="gender_enum"))
+    gender = db.Column(db.String(1))
 
     city = db.Column(db.String(200))
     start_date = db.Column(db.Date)

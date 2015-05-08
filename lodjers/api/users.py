@@ -81,10 +81,11 @@ class UserAPI(Resource):
 
             if k == 'gender':
                 if v:
+                    v = v.upper()
+
                     if v != "M" and v != "F":
                         return {'errors': {'gender': [
                                            'Gender must be M or F.']}}, 422
-                    v = v.upper()
 
             setattr(current_user, k, v)
         db.session.commit()
