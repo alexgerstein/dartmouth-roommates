@@ -1,1 +1,12 @@
-There are new matches waiting for you on lodjers.
+Hello {{recipient.nickname.split(" ")[0]}},
+
+{{user.nickname}} has joined lodjers, and it appears he might be a good roommate for you in {{recipient.city}}. Do you know {{user.nickname.split(" ")[0]}}?
+
+Get in touch with {{user.nickname.split(" ")[0]}} and find other new potential matches at lodjers.com!
+
+Have any suggestions for the site? Email us at support@lodjers.com.
+
+Happy searching from lodjers!
+
+
+P.S. If you are no longer looking for a roommate and want to stop receiving these notifications, simply uncheck the "Looking for roomates?" checkbox in your lodjers profile.

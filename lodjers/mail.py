@@ -31,14 +31,14 @@ def welcome_notification(user):
     mail.send(message)
 
 
-def new_matches_notification(user, match):
-    logger.info("NEW MATCH %s and %s" % (user.nickname, match.nickname))
-    message = create_message("%s, You have new potential roommate matches on lodjers!" % user.nickname.split(" ")[0],
+def new_matches_notification(user, recipient):
+    logger.info("NEW MATCH %s and %s" % (user.nickname, recipient.nickname))
+    message = create_message("%s, You have new potential roommate matches on lodjers!" % recipient.nickname.split(" ")[0],
         ADMINS[0],
-        [user.netid + "@dartmouth.edu"],
+        [recipient.netid + "@dartmouth.edu"],
         render_template("emails/new_matches.txt",
-            user=user),
+            user=user, recipient=recipient),
         render_template("emails/new_matches.html",
-            user=user))
+            user=user, recipient=recipient))
 
     mail.send(message)
