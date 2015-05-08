@@ -117,7 +117,7 @@ class TestUserMatchesAPI(TestBase):
         data = json.loads(matches.data)
         assert len(data['users']) == 5
 
-    def test_no_matches_from_finished_searchers(self, test_client,
+    def test_matches_includes_finished_searchers(self, test_client,
                                                 finished_sf_user, sf_user):
         with test_client.session_transaction() as sess:
             sess['user_id'] = sf_user.netid
@@ -125,7 +125,7 @@ class TestUserMatchesAPI(TestBase):
         matches = test_client.get('/api/users/matches')
         self.check_valid_header_type(matches.headers)
         data = json.loads(matches.data)
-        assert data['users'] == []
+        assert len(data['users']) == 1
 
     def test_no_matches_outside_start_date_range(self, test_client,
                                                  old_sf_user, sf_user):
