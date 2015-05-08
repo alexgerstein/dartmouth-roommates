@@ -18,7 +18,7 @@
     </md-input-container>
   </div>
   <div layout="row" layout-md="column">
-    <md-autocomplete flex
+    <md-autocomplete flex="66" flex-md="100"
         md-selected-item="ProfileController.selectedItem"
         md-search-text="user.city"
         md-items="item in querySearch(user.city)"
@@ -28,10 +28,15 @@
         name="city"
         required>
       <span md-highlight-text="ProfileController.searchText">{{item.display}}</span>
-      <div ng-messages="profileForm.city.$error" role="alert">
-        <span ng-message="required">Required</span>
-      </div>
     </md-autocomplete>
+    <md-input-container flex="33" flex-md="100">
+      <label>Gender</label>
+      <input ng-model="user.gender" name="gender" pattern="[MF]?" required>
+      <div ng-messages="profileForm.gender.$error" role="alert">
+        <span ng-message="required">Required</span>
+        <span ng-message="pattern">Enter either M or F</span>
+      </div>
+    </md-input-container>
   </div>
   <div layout="row" layout-md="column">
     <md-input-container flex="60" flex-md="100">

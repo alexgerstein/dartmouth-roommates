@@ -36,7 +36,8 @@ class TestUserAPI(TestBase):
         data = dict(nickname="Alex",
                     start_date=datetime.now().date(),
                     city="New York", grad_year=2015,
-                    time_period=10, searching=True)
+                    time_period=10, searching=True,
+                    gender="M")
         put = test_client.put('/api/user', data=data)
         self.check_valid_header_type(put.headers)
         data = json.loads(put.data)
@@ -49,7 +50,7 @@ class TestUserAPI(TestBase):
 
         data = dict(nickname="Alex",
                     start_date=datetime.now().date(),
-                    city="SF", grad_year=2015,
+                    city="SF", grad_year=2015, gender="M",
                     time_period=10, searching=True)
         put = test_client.put('/api/user', data=data)
         self.check_valid_header_type(put.headers)
@@ -58,6 +59,21 @@ class TestUserAPI(TestBase):
         assert data['user']['netid'] == user.netid
         assert data['user']['city'] == "san francisco"
 
+    def test_put_user_wrong_gender(self, test_client, user):
+        with test_client.session_transaction() as sess:
+            sess['user_id'] = user.netid
+
+        data = dict(nickname="Alex",
+                    start_date=datetime.now().date(),
+                    city="New York", grad_year=2015,
+                    time_period=10, searching=True,
+                    gender="Q")
+        put = test_client.put('/api/user', data=data)
+        self.check_valid_header_type(put.headers)
+        data = json.loads(put.data)
+        assert put.status_code == 422
+        assert "M or F" in data['errors']['gender'][0]
+
     def test_put_new_searcher_emails_matches(self, test_client, worker, outbox,
                                              sf_users, finished_sf_user):
         with test_client.session_transaction() as sess:
@@ -65,7 +81,7 @@ class TestUserAPI(TestBase):
 
         data = dict(nickname=finished_sf_user.nickname,
                     start_date=finished_sf_user.start_date,
-                    city=finished_sf_user.city,
+                    city=finished_sf_user.city, gender="M",
                     grad_year=finished_sf_user.grad_year,
                     time_period=finished_sf_user.time_period,
                     searching=True)
