@@ -2,10 +2,6 @@ nav md-toolbar {
   padding: 0 10%;
 }
 
-md-list-item {
-  position: relative;
-}
-
 .emailed {
   fill: lightgrey;
 }
@@ -22,10 +18,6 @@ md-list-item {
 
 .landing {
   text-align: center;
-
-  .md-button {
-    color: white !important;
-  }
 
   .landing-main {
     padding: 0 10%;
