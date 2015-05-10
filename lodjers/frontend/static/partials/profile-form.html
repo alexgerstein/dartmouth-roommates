@@ -41,9 +41,10 @@
   <div layout="row" layout-md="column">
     <md-input-container flex="60" flex-md="100">
       <label>Start Date</label>
-      <input name="start_date" type="date" class="datepicker" ng-model="user.start_date" required>
+      <input type="date" name="start_date" ng-model="user.start_date" placeholder="yyyy-MM-dd" required />
       <div ng-messages="profileForm.start_date.$error" role="alert">
         <span ng-message="required">Required</span>
+        <span ng-message="date">Not a valid date (YYYY-MM-DD).</span>
       </div>
     </md-input-container>
     <md-input-container flex="40" flex-md="100">
