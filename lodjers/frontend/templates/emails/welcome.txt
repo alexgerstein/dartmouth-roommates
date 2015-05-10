@@ -2,11 +2,11 @@ Welcome {{user.nickname.split(" ")[0]}},
 
 Finding a roommate has never been easier.
 
-With lodjers, you can let the roommate matches come to you. No more awkward posts on the Dartmouth Facebook group. lodjers helps you find roommates that match your off-term and post-graduation plans! Even better, it lets you decide who to contact.
+lodjers helps you find the roommates that match your off-term and/or post-grad plans!
 
-lodjers was built to make finding roommates as easy as possible. If you have any ideas for how to better acheive that goal, please send an email to support@lodjers.com.
+If you have any suggestions for the site, please send an email to support@lodjers.com.
 
-Now, it's time to find your next roommate. Be sure to complete your profile to start receiving matches.
+Now it's time to find your next roommate. Be sure to complete your profile to start receiving matches!
 
 Happy Searching,
 Alex

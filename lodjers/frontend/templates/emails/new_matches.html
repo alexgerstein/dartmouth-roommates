@@ -3,21 +3,23 @@
 <p>Hello {{recipient.nickname.split(" ")[0]}},</p>
 
 <p>
-  {{user.nickname}} has joined lodjers, and it appears he might be a good roommate for you in {{recipient.city}}. Do you know {{user.nickname.split(" ")[0]}}?
+  {{user.nickname}} has joined lodjers, and it appears they will also be in {{recipient.city}}. Do you know {{user.nickname.split(" ")[0]}}?
 </p>
 
 <p>
-  Get in touch with {{user.nickname.split(" ")[0]}} and find other new potential matches at <a href="{{url_for('frontend.profile', _external = True)}}">lodjers.com</a>!
+  Get in touch with {{user.nickname.split(" ")[0]}}, and find other new potential matches at <a href="{{url_for('frontend.profile', _external = True)}}">lodjers.com</a>!
 </p>
 
 <p>
   Have any suggestions for the site? Email us at <a href="mailto:support@lodjers.com">support@lodjers.com</a>.
 </p>
 
+<p>
 Happy searching from lodjers!
+</p>
 
 <br><br><br>
 
 <p>
-  P.S. If you are no longer looking for a roommate and want to stop receiving these notifications, simply uncheck the <i>Looking for roomates?</i> checkbox in your lodjers <a href="{{url_for('frontend.profile', _external = True)}}">profile</a>.
+  P.S. If you are no longer looking for a roommate and want to stop receiving these notifications, simply uncheck the <i>Looking for roommates?</i> checkbox in your lodjers <a href="{{url_for('frontend.profile', _external = True)}}">profile</a>.
 </p>
