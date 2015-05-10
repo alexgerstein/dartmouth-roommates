@@ -1,13 +1,13 @@
 <form name="profileForm" ng-submit="submit()"  ng-controller="ProfileController" class="md-whiteframe-z3" layout-padding>
   <div layout="row" layout-md="column">
-    <md-input-container flex="80" flex-md="100">
+    <md-input-container flex="66" flex-md="100">
       <label>Name</label>
       <input name="nickname" type="text" ng-model="user.nickname" required>
       <div ng-messages="profileForm.nickname.$error" role="alert">
         <span ng-message="required">Required</span>
       </div>
     </md-input-container>
-    <md-input-container flex="20" flex-md="100">
+    <md-input-container flex="33" flex-md="100">
       <label>Class Year</label>
       <input name="grad_year" type="number" class="validate" ng-model="user.grad_year" min="2000" max="2030" required>
       <div ng-messages="profileForm.grad_year.$error" role="alert">
