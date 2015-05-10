@@ -1,5 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Signika);
 
+main {
+  min-height: calc(100vh);
+}
+
 nav md-toolbar {
   padding: 0 10%;
 }
@@ -19,7 +23,7 @@ nav md-toolbar {
  */
 
 .logo {
-  font-family: 'Signika', sans-serif;
+  width: 100px;
 }
 
 .landing {
@@ -56,8 +60,9 @@ nav md-toolbar {
       margin: 0;
     }
   }
+}
 
-  .landing-footer {
-    background-color: rgb(76,175,80);
-  }
+.footer {
+  text-align: center;
+  background-color: rgb(76,175,80);
 }

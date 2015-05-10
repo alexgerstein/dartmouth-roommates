@@ -11,13 +11,14 @@
     {% endassets %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   </head>
   <body>
 
     <nav>
       <md-toolbar class="md-theme-light">
         <div class="md-toolbar-tools">
-          <a href="/"><span class="logo">lodjers</span></a>
+          <a href="/" flex><img class="logo" alt="lodjers" src="static/img/lodjerslogo.svg" /></span></a>
           <!-- fill up the space between left and right area -->
           <span flex></span>
           {% if current_user.is_authenticated() %}
@@ -30,7 +31,19 @@
       </md-toolbar>
     </nav>
 
+    <main>
     {% block content %}{% endblock %}
+    </main>
+
+    <div class="footer">
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <a href="/" flex><span><img class="logo" alt="lodjers" src="static/img/lodjerslogo.svg" /></span></a>
+          <span flex></span>
+          <p class="md-subhead" flex>© Copyright 2015</p></span>
+        </div>
+      </md-toolbar>
+    </div>
 
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
