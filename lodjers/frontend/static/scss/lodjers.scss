@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Signika);
+
 nav md-toolbar {
   padding: 0 10%;
 }
@@ -15,6 +17,10 @@ nav md-toolbar {
  LANDING PAGE
  *******************************
  */
+
+.logo {
+  font-family: 'Signika', sans-serif;
+}
 
 .landing {
   text-align: center;
