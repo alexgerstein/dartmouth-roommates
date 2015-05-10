@@ -142,7 +142,7 @@
         subject = "Moving to " + $scope.user.city;
       }
 
-      return "mailto:" + $scope.user.email + "?subject=" + subject + "&body=Hi " + $scope.user.nickname.split(' ')[0] +",<br><br>I saw on lodjers.com that you're also going to " + $scope.user.city + ".";
+      return "mailto:" + $scope.user.email + "?subject=" + subject + "&body=I saw on lodjers.com that you're also going to " + $scope.user.city + ".";
     }
 
     $scope.emailed = function() {
