@@ -24,9 +24,7 @@ def _make_context():
 
 @manager.command
 def tests():
-    subprocess.call("redis-server &", shell=True)
     test_status = subprocess.call("bash ./scripts/test.sh", shell=True)
-    subprocess.call("redis-cli shutdown", shell=True)
     sys.exit(test_status)
 
 

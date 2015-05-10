@@ -2,15 +2,17 @@ language: python
 cache: pip
 sudo: false
 python:
-- '2.7'
+  - '2.7'
+services:
+  - redis-server
 install:
-- pip install -r requirements.txt
-- pip install coveralls
+  - pip install -r requirements.txt
+  - pip install coveralls
 env:
   - APP_CONFIG_FILE=testing
 script: python manage.py tests
 after_success:
-- coveralls
+  - coveralls
 deploy:
   provider: heroku
   api_key:
