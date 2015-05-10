@@ -43,5 +43,7 @@ def create_app(env=None):
 
 
 def create_redis_connection(env=None):
-    return redis.from_url(os.getenv('REDISTOGO_URL')) if env == "staging" \
-           else redis.Redis()
+    if env == "staging" or env == "production":
+        return redis.from_url(os.getenv('REDISTOGO_URL'))
+
+    return redis.Redis()
