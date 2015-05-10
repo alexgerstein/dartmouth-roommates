@@ -39,6 +39,9 @@ def create_app(env=None):
     from lodjers.api import bp as api_bp
     app.register_blueprint(api_bp)
 
+    from lodjers.admin import admin
+    admin.init_app(app)
+
     return app
 
 
