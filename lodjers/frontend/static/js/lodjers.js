@@ -186,7 +186,7 @@
     };
 
     function loadAll() {
-      var allCities = 'Atlanta, Austin, Boston, Chicago, Dallas, Hanover, Houston, Los Angeles, New York City, Philadelphia, San Francisco, Washington D.C., ';
+      var allCities = 'Atlanta, Austin, Boston, Chicago, Dallas, Dayton, Hanover, Houston, Los Angeles, Madison, New York City, Philadelphia, San Francisco, Washington D.C., ';
       return allCities.split(/, +/g).map( function (city) {
         return {
           value: city.toLowerCase(),

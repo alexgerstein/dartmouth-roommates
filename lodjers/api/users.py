@@ -80,6 +80,7 @@ class UserAPI(Resource):
 
             if k == 'city':
                 if v:
+                    v = v.split(',')[0]
                     v = v.lower()
                     if v in CITY_ABBREVIATIONS:
                         v = CITY_ABBREVIATIONS[v]
