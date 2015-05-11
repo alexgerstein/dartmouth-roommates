@@ -22,6 +22,14 @@
    inkscape:export-ydpi="18.529411">
   <defs
      id="defs4" />
+  <defs>
+    <style type="text/css">
+      @font-face {
+        font-family: Signika;
+        src: url(http://fonts.googleapis.com/css?family=Signika);
+      }
+    </style>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
