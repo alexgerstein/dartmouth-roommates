@@ -33,7 +33,7 @@ class User(db.Model):
 
     def __init__(self, full_name, netid, grad_year=None, city=None,
                  email_updates=True, searching=True, start_date=None,
-                 time_period=12, last_emailed=None, gender=None):
+                 time_period=3, last_emailed=None, gender=None):
         self.full_name = full_name
         self.nickname = full_name
         self.netid = netid

@@ -197,6 +197,8 @@
           "city": user.city,
           "grad_year": user.grad_year,
           "searching": user.searching,
+          "time_period": user.time_period,
+          "start_date": user.start_date
       });
     }
 
