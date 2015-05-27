@@ -9,7 +9,7 @@ admin = Admin()
 
 class UserView(ModelView):
     can_create = False
-    can_delete = False
+    can_delete = True
 
     def is_accessible(self):
         return current_user.is_authenticated() and \
