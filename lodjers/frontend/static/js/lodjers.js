@@ -150,6 +150,7 @@
         $cookies.emailedUsers = $cookies.emailedUsers + ", " + $scope.user.netid;
         $scope.visited = true;
       }
+      mixpanel.track("Blitzed User");
     }
   }
 
@@ -168,9 +169,9 @@
       return results;
     };
 
-
     UserService.get().then(function(data) {
       $scope.user = data.user;
+      _identifyUser(data.user);
     });
 
     $scope.submit = function() {
@@ -182,8 +183,22 @@
           .position("top right")
           .hideDelay(3000)
         );
+        _identifyUser(data.user);
       });
     };
+
+    function _identifyUser(user) {
+      // Identify User on Mixpanel
+      mixpanel.identify(user.netid);
+      mixpanel.people.set_once('$created', user.joined_at);
+      mixpanel.people.set({
+          "$name": user.nickname,
+          "$email": user.email,
+          "city": user.city,
+          "grad_year": user.grad_year,
+          "searching": user.searching,
+      });
+    }
 
     function loadAll() {
       var allCities = 'Atlanta, Austin, Boston, Chicago, Dallas, Dayton, Hanover, Houston, Los Angeles, Madison, New York City, Philadelphia, San Francisco, Washington D.C., ';
